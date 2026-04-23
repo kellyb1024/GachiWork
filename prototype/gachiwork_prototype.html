@@ -119,6 +119,7 @@
   .input-wrap{background:#F3F4F6;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;font-size:12px;color:#9CA3AF}
   .input-wrap svg{width:14px;height:14px;color:#9CA3AF}
   .input-wrap input{border:none;background:transparent;outline:none;flex:1;font-size:12px;color:var(--ink);font-family:inherit}
+  label.input-wrap{cursor:pointer}
   .input-wrap select{appearance:none;-webkit-appearance:none;border:none;background:transparent;outline:none;flex:1;font-size:12px;color:var(--ink);font-family:inherit;cursor:pointer;padding:0;margin:0}
   .input-wrap select:invalid{color:#9CA3AF}
   .input-wrap select optgroup{font-weight:600;color:var(--ink)}
@@ -550,7 +551,7 @@ function screenCreateAccount(){
       </div>
       <div class="field">
         <label>Nationality</label>
-        <div class="input-wrap">
+        <label class="input-wrap">
           <select required>
             <option value="" disabled selected>Select your country</option>
             <optgroup label="Southeast Asia">
@@ -578,11 +579,11 @@ function screenCreateAccount(){
             </optgroup>
           </select>
           ${ICON.down}
-        </div>
+        </label>
       </div>
       <div class="field">
         <label>Language</label>
-        <div class="input-wrap">
+        <label class="input-wrap">
           ${ICON.lang}
           <select required>
             <option value="" disabled selected>Select your language</option>
@@ -614,7 +615,7 @@ function screenCreateAccount(){
             </optgroup>
           </select>
           ${ICON.down}
-        </div>
+        </label>
         <div class="helper">Posts are auto-translated from your language.</div>
       </div>
       <button class="btn primary">Join GachiWork${ICON.arrow}</button>
