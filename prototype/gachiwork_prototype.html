@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GachiWork — Digital Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary: #2E74B5;
+    --primary-700:#245e93;
+    --primary-50:#EAF2FA;
+    --secondary:#F59E0B;
+    --secondary-50:#FEF3C7;
+    --tertiary:#ECFDF5;
+    --tertiary-500:#10B981;
+    --neutral:#75777C;
+    --ink:#1F2937;
+    --ink-soft:#4B5563;
+    --line:#E5E7EB;
+    --bg:#F5F7FB;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  html,body{margin:0;padding:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--ink);background:
+    radial-gradient(1200px 600px at 10% -10%, #DCE8F6 0%, transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, #FFF4DD 0%, transparent 60%),
+    #F5F7FB;
+    min-height:100vh}
+  h1,h2,h3,h4{font-family:'Lexend',sans-serif;letter-spacing:-0.01em;margin:0}
+  button{font-family:inherit}
+
+  /* Page chrome */
+  .page{max-width:1600px;margin:0 auto;padding:56px 28px 120px}
+  .page-head{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:40px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand-mark{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#2E74B5,#245e93);display:grid;place-items:center;box-shadow:0 10px 24px -10px rgba(46,116,181,.55)}
+  .brand-mark svg{width:22px;height:22px;color:#fff}
+  .brand-title{font-family:'Lexend';font-weight:700;font-size:22px;color:var(--primary);letter-spacing:-0.02em}
+  .brand-title em{font-style:normal;color:var(--secondary)}
+  .brand-sub{font-size:12px;color:var(--neutral);margin-top:2px}
+  .head-meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .chip{font-size:12px;padding:6px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--ink-soft);font-weight:500}
+  .chip.primary{background:var(--primary-50);color:var(--primary);border-color:transparent}
+
+  .intro{max-width:720px;margin-bottom:48px}
+  .intro h1{font-size:44px;line-height:1.05;font-weight:700;color:var(--ink)}
+  .intro h1 .hl{background:linear-gradient(120deg,rgba(245,158,11,.4) 0 100%);background-size:100% 38%;background-repeat:no-repeat;background-position:0 82%;padding:0 4px}
+  .intro p{color:var(--ink-soft);font-size:16px;line-height:1.6;margin:18px 0 0}
+  .legend{display:flex;gap:14px;margin-top:22px;flex-wrap:wrap}
+  .legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-soft)}
+  .dot{width:14px;height:14px;border-radius:4px}
+
+  /* Design system row */
+  .system{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;display:grid;grid-template-columns:1.1fr 1.4fr 1fr;gap:18px;margin-bottom:36px}
+  .sys-block h4{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--neutral);font-weight:600;margin-bottom:10px}
+  .palette{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .sw{border-radius:10px;padding:10px;color:#fff;font-size:10px;font-weight:600;display:flex;flex-direction:column;gap:28px;justify-content:space-between;min-height:66px;position:relative;overflow:hidden}
+  .sw .hex{opacity:.9;font-weight:500;font-family:'Lexend'}
+  .sw.neu{color:#fff}
+  .sw.ter{color:#065F46;background:var(--tertiary) !important}
+  .type-row{display:flex;gap:12px;align-items:flex-end}
+  .type-card{flex:1;background:#F8FAFC;border-radius:12px;padding:14px;border:1px solid #EEF2F7}
+  .type-card .t-meta{font-size:10px;color:var(--neutral);display:flex;justify-content:space-between;margin-bottom:4px;font-weight:500}
+  .type-card .t-aa{font-family:'Lexend';font-size:44px;font-weight:700;line-height:1;color:var(--ink)}
+  .type-card.jk .t-aa{font-family:'Plus Jakarta Sans';font-weight:700}
+  .comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .comp{background:#F8FAFC;border:1px solid #EEF2F7;border-radius:12px;padding:10px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink-soft);font-weight:500;min-height:50px}
+  .comp.btn-p{background:var(--primary);color:#fff;border-color:transparent;box-shadow:0 6px 12px -6px rgba(46,116,181,.5)}
+  .comp.btn-s{background:var(--secondary);color:#fff;border-color:transparent}
+  .comp.input{justify-content:flex-start;color:#9CA3AF}
+  .comp.search{justify-content:flex-start;color:#9CA3AF;gap:6px}
+
+  /* Phone gallery */
+  .gallery-head{display:flex;align-items:center;justify-content:space-between;margin:20px 0 22px;gap:10px;flex-wrap:wrap}
+  .gallery-head h2{font-size:22px;font-weight:600}
+  .gallery-head .count{color:var(--neutral);font-size:13px}
+  .phones{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:1200px;margin:0 auto}
+  @media (max-width:1024px){ .phones{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:900px){ .system{grid-template-columns:1fr}}
+  @media (max-width:600px){ .phones{grid-template-columns:1fr} .intro h1{font-size:32px}}
+
+  .phone-wrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+  .phone-label{font-size:12px;color:var(--neutral);letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+  .phone-label b{color:var(--ink);font-weight:700;letter-spacing:.02em;text-transform:none;font-size:14px;display:block;margin-top:2px;font-family:'Lexend'}
+  .phone{width:100%;max-width:320px;aspect-ratio:320/660;background:#111827;border-radius:42px;padding:10px;box-shadow:0 30px 60px -30px rgba(20,32,63,.45), 0 12px 24px -12px rgba(20,32,63,.25);position:relative;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease}
+  .phone:hover{transform:translateY(-6px);box-shadow:0 40px 80px -30px rgba(20,32,63,.55), 0 16px 28px -12px rgba(20,32,63,.3)}
+  .phone-screen{background:#F5F7FB;border-radius:32px;height:100%;overflow:hidden;position:relative;display:flex;flex-direction:column}
+  .notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:90px;height:22px;background:#111827;border-radius:0 0 14px 14px;z-index:10}
+
+  /* Shared mobile internals */
+  .statusbar{padding:14px 22px 6px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--ink);font-weight:600;letter-spacing:.02em;flex-shrink:0}
+  .statusbar .right{display:flex;gap:5px;align-items:center}
+  .statusbar svg{width:13px;height:13px}
+  .scrollview{flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
+  .scrollview::-webkit-scrollbar{display:none}
+
+  /* Top bar */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 18px 12px;background:transparent}
+  .topbar .logo{display:flex;align-items:center;gap:8px}
+  .topbar .logo .mk{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,#2E74B5,#245e93);display:grid;place-items:center}
+  .topbar .logo .mk svg{width:14px;height:14px;color:#fff}
+  .topbar .logo span{font-family:'Lexend';font-weight:700;color:var(--primary);font-size:15px;letter-spacing:-0.01em}
+  .topbar .menu{width:22px;height:22px;color:var(--primary)}
+  .topbar .menu svg{width:100%;height:100%}
+  .lang{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--primary);font-weight:600}
+
+  /* Auth screens */
+  .auth{padding:0 20px 20px;display:flex;flex-direction:column;gap:14px}
+  .auth-logo{margin:20px auto 6px;width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,#2E74B5,#245e93);display:grid;place-items:center;box-shadow:0 14px 28px -14px rgba(46,116,181,.7)}
+  .auth-logo svg{width:26px;height:26px;color:#fff}
+  .auth h2{text-align:center;font-family:'Lexend';font-size:22px;font-weight:700;color:var(--ink)}
+  .auth .sub{text-align:center;color:var(--ink-soft);font-size:11px;margin-top:-6px}
+  .card{background:#fff;border-radius:18px;padding:16px;box-shadow:0 8px 24px -16px rgba(31,41,55,.2)}
+  .field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+  .field label{font-size:11px;font-weight:600;color:var(--ink);display:flex;justify-content:space-between;align-items:center}
+  .field label .link{color:var(--primary);font-weight:500;font-size:10px}
+  .input-wrap{background:#F3F4F6;border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;font-size:12px;color:#9CA3AF}
+  .input-wrap svg{width:14px;height:14px;color:#9CA3AF}
+  .input-wrap input{border:none;background:transparent;outline:none;flex:1;font-size:12px;color:var(--ink);font-family:inherit}
+  .helper{font-size:10px;color:var(--neutral);margin-top:3px}
+  .btn{width:100%;padding:11px;border-radius:10px;border:none;font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;font-family:inherit}
+  .btn.primary{background:linear-gradient(180deg,#3280C3,#2E74B5);color:#fff;box-shadow:0 8px 16px -8px rgba(46,116,181,.6)}
+  .btn.secondary{background:var(--secondary);color:#fff;box-shadow:0 8px 16px -8px rgba(245,158,11,.6)}
+  .btn.soft{background:#F3F4F6;color:var(--ink)}
+  .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .divider{text-align:center;font-size:10px;color:var(--neutral);letter-spacing:.14em;font-weight:600;position:relative;margin:10px 0;padding:0 40px}
+  .divider::before,.divider::after{content:'';position:absolute;top:50%;width:30px;height:1px;background:var(--line)}
+  .divider::before{left:0}.divider::after{right:0}
+  .bottom-link{text-align:center;font-size:11px;color:var(--ink-soft);margin-top:6px}
+  .bottom-link a{color:var(--primary);font-weight:600;text-decoration:none}
+
+  /* Create account specific */
+  .toggle-row{display:flex;gap:8px;margin-bottom:4px}
+  .toggle{flex:1;padding:10px 8px;border-radius:12px;background:#F3F4F6;text-align:center;font-size:10px;color:var(--ink-soft);font-weight:500;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .toggle.on{background:var(--secondary-50);color:#92400E;border:1px solid #FCD34D}
+  .toggle svg{width:16px;height:16px}
+  .secure-pill{margin-top:6px;font-size:10px;color:var(--secondary);background:#FFF7E6;border:1px dashed #F59E0B;padding:7px;border-radius:8px;text-align:center;font-weight:600;letter-spacing:.06em}
+
+  /* Home */
+  .home-hero{padding:10px 20px 12px}
+  .h-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#DBEAFE,#93C5FD);display:grid;place-items:center;color:var(--primary);font-weight:700;font-family:'Lexend';font-size:14px;flex-shrink:0}
+  .avatar.lg{width:84px;height:84px;font-size:32px}
+  .h-name-block{display:flex;flex-direction:column}
+  .h-name-block .n1{font-family:'Lexend';color:var(--primary);font-weight:700;font-size:15px;line-height:1.1}
+  .verified-pill{display:inline-flex;align-items:center;gap:3px;background:var(--secondary);color:#fff;font-size:8px;font-weight:700;letter-spacing:.08em;padding:2px 6px;border-radius:4px;margin-top:3px;width:fit-content}
+  .greet h2{font-size:22px;font-weight:700;color:var(--ink);font-family:'Lexend'}
+  .greet p{font-size:11px;color:var(--ink-soft);margin-top:3px}
+  .seg{display:flex;gap:6px;padding:0 20px;margin:14px 0 12px}
+  .seg-tab{padding:7px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:11px;color:var(--ink-soft);font-weight:500;display:flex;align-items:center;gap:4px;white-space:nowrap}
+  .seg-tab.on{background:var(--secondary-50);color:#92400E;border-color:#FCD34D;font-weight:600}
+  .seg-tab svg{width:11px;height:11px}
+  .feed{padding:0 16px 80px;display:flex;flex-direction:column;gap:10px}
+  .post{background:#fff;border-radius:14px;padding:12px;box-shadow:0 2px 8px -4px rgba(31,41,55,.1)}
+  .post-tags{display:flex;gap:5px;margin-bottom:8px}
+  .tag{font-size:8px;font-weight:700;padding:3px 7px;border-radius:5px;letter-spacing:.04em}
+  .tag.blue{background:#DBEAFE;color:#1E40AF}
+  .tag.green{background:#D1FAE5;color:#065F46}
+  .tag.orange{background:#FEF3C7;color:#92400E}
+  .tag.purple{background:#EDE9FE;color:#5B21B6}
+  .post .time{font-size:9px;color:var(--neutral);float:right}
+  .post h3{font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.3;margin-top:2px;font-family:'Plus Jakarta Sans'}
+  .post-meta{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:10px;color:var(--neutral)}
+  .user-chip{display:flex;align-items:center;gap:5px}
+  .user-chip .u-dot{width:18px;height:18px;border-radius:50%;background:#E5E7EB;display:grid;place-items:center;color:var(--neutral);font-weight:600;font-size:9px}
+  .meta-right{display:flex;gap:10px;align-items:center}
+  .meta-right svg{width:11px;height:11px}
+  .ad{background:linear-gradient(135deg,#2E74B5,#1e5a90);color:#fff;border-radius:14px;padding:14px;position:relative;overflow:hidden}
+  .ad::after{content:'';position:absolute;right:-20px;bottom:-20px;width:100px;height:100px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff22' stroke-width='1'><path d='M6 2h9l5 5v15H6z'/><path d='M15 2v5h5'/><path d='M9 12h6M9 16h6M9 8h3'/></svg>") no-repeat center/contain;opacity:.5}
+  .ad .pill{display:inline-block;background:rgba(255,255,255,.2);font-size:8px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:.1em;backdrop-filter:blur(2px)}
+  .ad h3{font-family:'Lexend';font-size:15px;font-weight:700;margin:8px 0 4px}
+  .ad p{font-size:10px;opacity:.85;line-height:1.4;margin-bottom:10px}
+  .ad .btn{background:var(--secondary);color:#fff;font-size:11px;padding:7px 14px;width:fit-content}
+  .fab{position:absolute;right:16px;bottom:78px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;box-shadow:0 10px 20px -6px rgba(46,116,181,.6);z-index:8}
+  .fab svg{width:20px;height:20px}
+
+  /* Bottom nav */
+  .tabbar{position:absolute;bottom:0;left:0;right:0;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:8px 16px 14px;display:flex;justify-content:space-around;z-index:5}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;color:var(--neutral);font-weight:500}
+  .tab.on{color:var(--primary);font-weight:700}
+  .tab svg{width:18px;height:18px}
+
+  /* Explore */
+  .search-bar{margin:6px 20px 14px;background:#fff;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px -4px rgba(31,41,55,.1);font-size:12px;color:#9CA3AF}
+  .search-bar svg{width:14px;height:14px;color:var(--primary)}
+  .sec-title{padding:0 20px;font-family:'Lexend';font-size:16px;font-weight:700;color:var(--ink);margin:10px 0 10px;display:flex;justify-content:space-between;align-items:center}
+  .sec-title a{font-size:10px;color:var(--primary);font-weight:600}
+  .trend-hero{margin:0 16px 14px;border-radius:16px;overflow:hidden;position:relative;height:115px;background:linear-gradient(135deg,#2E74B5,#1e3a5f)}
+  .trend-hero::before{content:'';position:absolute;inset:0;background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,.1) 0 8%,transparent 10%),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,.08) 0 12%,transparent 15%);
+  }
+  .trend-hero .pill{position:absolute;top:12px;left:12px;background:var(--secondary);color:#fff;font-size:8px;font-weight:700;padding:3px 8px;border-radius:5px;letter-spacing:.08em;z-index:2}
+  .trend-hero .info{position:absolute;left:12px;bottom:10px;color:#fff;z-index:2}
+  .trend-hero .info h3{font-family:'Lexend';font-size:14px;font-weight:700}
+  .trend-hero .info p{font-size:9px;opacity:.85;margin-top:2px}
+  .cards-h{display:flex;gap:10px;padding:0 16px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;margin-bottom:10px}
+  .cards-h::-webkit-scrollbar{display:none}
+  .card-sm{flex:0 0 135px;background:#fff;border-radius:12px;padding:12px;box-shadow:0 2px 8px -4px rgba(31,41,55,.1)}
+  .card-sm .emoji{width:32px;height:32px;border-radius:8px;display:grid;place-items:center;font-size:16px;margin-bottom:8px}
+  .card-sm .emoji.orange{background:#FEF3C7}
+  .card-sm .emoji.green{background:#D1FAE5}
+  .card-sm .emoji.purple{background:#EDE9FE}
+  .card-sm h4{font-size:11px;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:3px;font-family:'Plus Jakarta Sans'}
+  .card-sm p{font-size:9px;color:var(--neutral);line-height:1.3;margin-bottom:8px;min-height:24px}
+  .card-sm .btn-mini{background:#F3F4F6;color:var(--primary);font-size:10px;font-weight:600;padding:5px 10px;border-radius:6px;border:none;cursor:pointer;font-family:inherit}
+  .rec-card{margin:0 16px 10px;background:#fff;border-radius:14px;padding:12px;box-shadow:0 2px 8px -4px rgba(31,41,55,.1)}
+  .rec-top{display:flex;align-items:center;gap:8px;font-size:9px;color:var(--neutral);margin-bottom:8px}
+  .rec-top .av{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#FBBF24,#F59E0B);display:grid;place-items:center;font-size:9px;color:#fff;font-weight:700}
+  .rec-card h4{font-size:11.5px;font-weight:600;color:var(--ink);line-height:1.4;margin-bottom:8px;font-family:'Plus Jakarta Sans'}
+  .rec-card .badges{display:flex;gap:5px;margin-bottom:8px}
+  .rec-card .row{display:flex;justify-content:space-between;align-items:center}
+  .rec-card .row .left{display:flex;gap:10px;font-size:9px;color:var(--neutral)}
+  .rec-card .row .left svg{width:10px;height:10px}
+  .rec-card .row .apply{background:var(--primary);color:#fff;font-size:10px;padding:6px 12px;border-radius:6px;font-weight:600;border:none}
+  .op-card{margin:0 16px 10px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px -4px rgba(31,41,55,.1)}
+  .op-card .img{height:70px;background:
+    linear-gradient(180deg,rgba(0,0,0,.0),rgba(0,0,0,.15)),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23fbbf24'/><stop offset='1' stop-color='%23f97316'/></linearGradient></defs><rect fill='url(%23g)' width='100' height='60'/><circle cx='70' cy='30' r='18' fill='%23fff' opacity='.2'/><circle cx='85' cy='15' r='8' fill='%23fff' opacity='.2'/></svg>");background-size:cover;position:relative}
+  .op-card .img .chip{position:absolute;top:8px;left:8px;background:var(--secondary);color:#fff;font-size:8px;font-weight:700;padding:3px 7px;border-radius:4px;letter-spacing:.06em}
+  .op-card .body{padding:10px 12px}
+  .op-card .body h4{font-size:11px;font-weight:700;color:var(--ink);line-height:1.3;margin-bottom:4px}
+  .op-card .body p{font-size:9px;color:var(--neutral);line-height:1.4}
+  .op-card .body .row{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:9px}
+  .op-card .body .row .n{color:var(--primary);font-weight:600}
+  .av-row{display:flex}
+  .av-row .mini{width:18px;height:18px;border-radius:50%;border:2px solid #fff;margin-right:-6px;background:#CBD5E1}
+  .av-row .mini:nth-child(1){background:#FBBF24}
+  .av-row .mini:nth-child(2){background:#60A5FA}
+  .av-row .mini:nth-child(3){background:#A78BFA}
+  .av-row .more{font-size:9px;color:var(--neutral);margin-left:8px;align-self:center}
+
+  /* Search */
+  .top-boards{padding:0 16px;display:flex;flex-direction:column;gap:8px}
+  .tb-item{background:#fff;border-radius:12px;padding:11px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px -4px rgba(31,41,55,.08)}
+  .tb-icon{width:28px;height:28px;border-radius:8px;background:var(--primary-50);display:grid;place-items:center;color:var(--primary);flex-shrink:0}
+  .tb-icon svg{width:14px;height:14px}
+  .tb-text{flex:1}
+  .tb-text h4{font-size:11.5px;font-weight:700;color:var(--ink);line-height:1.2;font-family:'Plus Jakarta Sans'}
+  .tb-text p{font-size:9px;color:var(--neutral);margin-top:2px}
+  .tb-meta{text-align:right}
+  .tb-meta .num{font-size:13px;font-weight:700;color:var(--primary);font-family:'Lexend'}
+  .tb-meta .s{font-size:8px;color:#10B981;font-weight:600;display:flex;align-items:center;gap:2px;justify-content:flex-end}
+  .tb-meta .s .d{width:5px;height:5px;border-radius:50%;background:#10B981}
+  .trend-list{padding:4px 16px 80px;display:flex;flex-direction:column;gap:8px}
+  .trend-item{background:#fff;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 2px 8px -4px rgba(31,41,55,.08)}
+  .trend-num{font-family:'Lexend';font-size:13px;font-weight:700;color:var(--neutral);width:18px}
+  .trend-body{flex:1}
+  .trend-body h4{font-size:11.5px;font-weight:700;color:var(--ink);font-family:'Plus Jakarta Sans'}
+  .trend-body p{font-size:9px;color:var(--neutral);margin-top:2px}
+  .trend-ch{font-size:10px;font-weight:700}
+  .trend-ch.up{color:#10B981}
+  .trend-ch.dn{color:#EF4444}
+
+  /* Inbox */
+  .tabs-top{display:flex;padding:0 20px;border-bottom:1px solid var(--line);margin-top:4px;flex-shrink:0}
+  .tabs-top .tt{flex:1;text-align:center;padding:10px 0;font-size:12px;color:var(--neutral);font-weight:500;position:relative;cursor:pointer;font-family:'Lexend'}
+  .tabs-top .tt.on{color:var(--primary);font-weight:700}
+  .tabs-top .tt.on::after{content:'';position:absolute;bottom:-1px;left:30%;right:30%;height:2px;background:var(--primary);border-radius:2px}
+  .chat-list{padding:6px 16px 80px;display:flex;flex-direction:column;gap:6px}
+  .chat-item{padding:11px 12px;border-radius:12px;display:flex;align-items:flex-start;gap:10px;background:transparent;transition:background .2s ease}
+  .chat-item.unread{background:#fff;box-shadow:0 2px 8px -4px rgba(31,41,55,.08)}
+  .chat-item .av{width:36px;height:36px;border-radius:50%;background:#E5E7EB;display:grid;place-items:center;color:var(--neutral);font-weight:600;font-size:12px;flex-shrink:0}
+  .chat-item.unread .av{background:var(--primary-50);color:var(--primary)}
+  .chat-item .body{flex:1;min-width:0}
+  .chat-item h4{font-size:12px;font-weight:700;color:var(--ink);font-family:'Plus Jakarta Sans'}
+  .chat-item.unread h4{color:var(--ink)}
+  .chat-item p{font-size:10.5px;color:var(--neutral);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:4px}
+  .chat-item p svg{width:11px;height:11px;color:var(--primary);flex-shrink:0}
+  .chat-item .right{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+  .chat-item .right .t{font-size:9px;color:var(--primary);font-weight:600}
+  .chat-item .right .n{background:var(--primary);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:10px;min-width:18px;text-align:center}
+
+  .notif-list{padding:6px 16px 80px;display:flex;flex-direction:column;gap:6px}
+  .notif-item{padding:11px 12px;border-radius:12px;background:#fff;display:flex;gap:10px;box-shadow:0 2px 8px -4px rgba(31,41,55,.08)}
+  .notif-item.read{background:transparent;box-shadow:none;opacity:.7}
+  .notif-item .ic{width:30px;height:30px;border-radius:8px;background:var(--primary-50);display:grid;place-items:center;color:var(--primary);flex-shrink:0}
+  .notif-item.ai .ic{background:var(--tertiary);color:var(--tertiary-500)}
+  .notif-item.thanks .ic{background:#FEF3C7;color:var(--secondary)}
+  .notif-item.welcome .ic{background:#EDE9FE;color:#7C3AED}
+  .notif-item .ic svg{width:14px;height:14px}
+  .notif-item .body{flex:1;min-width:0}
+  .notif-item h4{font-size:11px;font-weight:700;color:var(--ink);line-height:1.3;font-family:'Plus Jakarta Sans'}
+  .notif-item p{font-size:10px;color:var(--ink-soft);margin-top:3px;line-height:1.3}
+  .notif-item .t{font-size:9px;color:var(--neutral);margin-top:4px;font-weight:500}
+
+  /* Profile */
+  .profile-head{padding:12px 20px 16px;text-align:center}
+  .profile-head h3{font-family:'Lexend';font-size:20px;font-weight:700;color:var(--ink);margin-top:10px}
+  .profile-head .meta{font-size:10px;color:var(--neutral);margin-top:3px}
+  .profile-head .verified-pill{margin:8px auto 0}
+  .trust-card{margin:0 16px 14px;background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 8px -4px rgba(31,41,55,.08)}
+  .trust-label{font-size:10px;font-weight:600;color:var(--neutral);letter-spacing:.08em;margin-bottom:10px;text-align:center}
+  .trust-bar{height:10px;background:linear-gradient(90deg,#3B82F6 0%,#10B981 35%,#FBBF24 70%,#F97316 100%);border-radius:10px;position:relative}
+  .trust-bar .indicator{position:absolute;top:-2px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--secondary);box-shadow:0 2px 6px rgba(0,0,0,.15);transform:translateX(-50%)}
+  .trust-scale{display:flex;justify-content:space-between;margin-top:6px;font-size:8px;color:var(--neutral);font-weight:600;letter-spacing:.04em}
+  .trust-scale .flame{color:var(--secondary)}
+  .seg-tab-wrap{padding:0 16px;display:flex;border-bottom:1px solid var(--line);margin-bottom:10px}
+  .seg-tab-wrap .st{flex:1;text-align:center;padding:10px 0;font-size:11.5px;color:var(--neutral);font-weight:500;position:relative;cursor:pointer;font-family:'Lexend'}
+  .seg-tab-wrap .st.on{color:var(--primary);font-weight:700}
+  .seg-tab-wrap .st.on::after{content:'';position:absolute;bottom:-1px;left:20%;right:20%;height:2px;background:var(--primary);border-radius:2px}
+  .post-item{margin:0 16px 10px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px -4px rgba(31,41,55,.08)}
+  .post-item .body{padding:12px}
+  .post-item h4{font-size:12px;font-weight:700;color:var(--ink);line-height:1.3;font-family:'Plus Jakarta Sans'}
+  .post-item .time{font-size:9px;color:var(--neutral);margin-top:3px}
+  .post-item p{font-size:10.5px;color:var(--ink-soft);line-height:1.5;margin-top:8px}
+  .post-item .img-placeholder{height:90px;background:linear-gradient(135deg,#E5E7EB,#CBD5E1);margin-top:8px;border-radius:8px;display:grid;place-items:center;color:#9CA3AF;font-size:22px}
+  .post-item .footer{display:flex;gap:12px;font-size:10px;color:var(--neutral);margin-top:10px;align-items:center}
+  .post-item .footer svg{width:11px;height:11px}
+
+  /* Footer */
+  .page-footer{margin-top:80px;padding-top:30px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--neutral);font-size:12px}
+  .page-footer .left{max-width:520px;line-height:1.6}
+
+  /* modal */
+  .modal{position:fixed;inset:0;background:rgba(15,23,42,.75);backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+  .modal.open{display:flex}
+  .modal-inner{position:relative;max-width:380px;width:100%}
+  .modal-close{position:absolute;top:-44px;right:0;background:#fff;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+  .modal-close svg{width:16px;height:16px}
+  .modal .phone{cursor:default;max-width:none}
+  .modal .phone:hover{transform:none}
+
+  /* Tab pane visibility */
+  .tab-pane{display:block}
+  .tab-pane.hidden{display:none}
+
+  /* Recent search chips */
+  .recent-chips{padding:0 16px 4px;display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+  .r-chip{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:6px 11px;font-size:10.5px;color:var(--ink-soft);font-weight:500;box-shadow:0 1px 2px rgba(31,41,55,.04)}
+  .r-chip svg{width:11px;height:11px;color:var(--neutral)}
+  .r-chip .x{color:var(--neutral);font-size:13px;margin-left:2px;line-height:1;font-weight:400}
+
+  /* Tabs interaction */
+  .tt, .st{cursor:pointer;user-select:none;transition:color .15s ease}
+
+  /* Followers */
+  .follower-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#fff;border-radius:12px;box-shadow:0 2px 8px -4px rgba(31,41,55,.08)}
+  .follower-item .av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-family:'Lexend';font-size:14px;flex-shrink:0}
+  .follower-item .body{flex:1;min-width:0}
+  .follower-item .body h4{font-size:12px;font-weight:700;color:var(--ink);font-family:'Plus Jakarta Sans'}
+  .follower-item .body p{font-size:9.5px;color:var(--neutral);margin-top:2px}
+  .btn-follow{border:1px solid var(--primary);background:var(--primary);color:#fff;font-size:10px;font-weight:700;padding:6px 12px;border-radius:999px;cursor:pointer;font-family:inherit}
+  .btn-follow.on{background:#fff;color:var(--primary)}
+
+  /* Reveal animation */
+  .phone-wrap{opacity:0;transform:translateY(12px);animation:rise .6s ease forwards}
+  .phone-wrap:nth-child(1){animation-delay:.05s}
+  .phone-wrap:nth-child(2){animation-delay:.1s}
+  .phone-wrap:nth-child(3){animation-delay:.15s}
+  .phone-wrap:nth-child(4){animation-delay:.2s}
+  .phone-wrap:nth-child(5){animation-delay:.25s}
+  .phone-wrap:nth-child(6){animation-delay:.3s}
+  .phone-wrap:nth-child(7){animation-delay:.35s}
+  .phone-wrap:nth-child(8){animation-delay:.4s}
+  @keyframes rise{to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="page-head">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM9 5h6v2H9z"/></svg>
+      </div>
+      <div>
+        <div class="brand-title">Gachi<em>Work</em></div>
+        <div class="brand-sub">Digital Prototype · v0.1</div>
+      </div>
+    </div>
+    <div class="head-meta">
+      <span class="chip primary">Group 18 · KLES Capstone</span>
+      <span class="chip">March 2026</span>
+      <span class="chip">6 screens</span>
+    </div>
+  </div>
+
+  <div class="intro">
+    <h1>E-9 근로자를 <span class="hl">같이(gachi)</span> 잇는 다국어 피어 커뮤니티.</h1>
+    <p>
+      전국에 흩어진 E-9 외국인 근로자를 업종 단위로 연결하는 AI 기반 다국어 커뮤니티.
+      AI 실시간 번역으로 6개국 근로자가 국적에 관계없이 경험을 공유하고,
+      동료 경험(RAG)과 공식 정보(SOP)를 함께 제시해 근로자가 <b>스스로 상황을 판단</b>할 수 있도록 돕습니다.
+    </p>
+    <div class="legend">
+      <div class="legend-item"><span class="dot" style="background:#2E74B5"></span>Primary #2E74B5</div>
+      <div class="legend-item"><span class="dot" style="background:#F59E0B"></span>Secondary #F59E0B</div>
+      <div class="legend-item"><span class="dot" style="background:#ECFDF5;border:1px solid #A7F3D0"></span>Tertiary #ECFDF5</div>
+      <div class="legend-item"><span class="dot" style="background:#75777C"></span>Neutral #75777C</div>
+      <div class="legend-item">· Lexend / Plus Jakarta Sans</div>
+    </div>
+  </div>
+
+  <!-- Design system row -->
+  <div class="system">
+    <div class="sys-block">
+      <h4>Color Palette</h4>
+      <div class="palette">
+        <div class="sw" style="background:#2E74B5">Primary<span class="hex">#2E74B5</span></div>
+        <div class="sw" style="background:#F59E0B">Secondary<span class="hex">#F59E0B</span></div>
+        <div class="sw ter">Tertiary<span class="hex">#ECFDF5</span></div>
+        <div class="sw" style="background:#75777C">Neutral<span class="hex">#75777C</span></div>
+      </div>
+    </div>
+    <div class="sys-block">
+      <h4>Typography</h4>
+      <div class="type-row">
+        <div class="type-card">
+          <div class="t-meta"><span>Headline</span><span>Lexend</span></div>
+          <div class="t-aa">Aa</div>
+        </div>
+        <div class="type-card jk">
+          <div class="t-meta"><span>Body</span><span>Plus Jakarta Sans</span></div>
+          <div class="t-aa">Aa</div>
+        </div>
+        <div class="type-card jk">
+          <div class="t-meta"><span>Label</span><span>Plus Jakarta Sans</span></div>
+          <div class="t-aa" style="font-size:28px">Aa</div>
+        </div>
+      </div>
+    </div>
+    <div class="sys-block">
+      <h4>Components</h4>
+      <div class="comp-grid">
+        <div class="comp btn-p">Primary</div>
+        <div class="comp btn-s">Secondary</div>
+        <div class="comp input">Input field…</div>
+        <div class="comp search">🔍 Search…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery -->
+  <div class="gallery-head">
+    <h2>Screens</h2>
+    <span class="count">Tap any screen to open it full-size</span>
+  </div>
+
+  <div class="phones" id="gallery"></div>
+
+  <div class="page-footer">
+    <div class="left">
+      <b style="color:var(--ink);font-family:'Lexend'">GachiWork</b> · A service where foreign workers are not just recipients of help, but active agents who give and receive support from each other.
+      <br/>Group 18 — Kyungjin Bae, Jinhue Koo, Bertrand Ludmilla Christine Chantal, Bong Indria Sukma
+    </div>
+    <div>Capstone Project · KLES · 2026</div>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-inner">
+    <button class="modal-close" id="modalClose">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+/* ---------------- SHARED ICONS ---------------- */
+const ICON = {
+  briefcase:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM9 5h6v2H9z"/></svg>`,
+  menu:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`,
+  lang:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h7M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c0 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9M13.8 17h4.4"/></svg>`,
+  search:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
+  comment:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+  heart:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`,
+  plus:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`,
+  home:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-4v-7H10v7H6a2 2 0 0 1-2-2z"/></svg>`,
+  compass:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`,
+  inbox:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>`,
+  user:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+  wallet:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4z"/></svg>`,
+  shield:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  book:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`,
+  globe:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  spark:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`,
+  bell:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>`,
+  check2:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+  dblcheck:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 6 9.17 17 4.5 12.33"/><polyline points="13 17 21 9"/></svg>`,
+  settings:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+  finger:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11a5 5 0 0 0-5 5v1"/><path d="M17 16a5 5 0 0 0-10 0"/><path d="M7 17v-1a5 5 0 0 1 10 0v1"/><path d="M12 7a4 4 0 0 1 4 4"/><path d="M12 3a8 8 0 0 1 8 8"/></svg>`,
+  lock:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
+  eye:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`,
+  arrow:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`,
+  down:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`,
+  google:`<svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.7-6.1 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.1 8 3l5.7-5.7C34.1 5.9 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.3 18.9 12 24 12c3.1 0 5.9 1.1 8 3l5.7-5.7C34.1 5.9 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.5 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.5l6.2 5.2C41.9 35.3 44 30 44 24c0-1.3-.1-2.3-.4-3.5z"/></svg>`,
+  signal:`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 17h2v3H5zm4-3h2v6H9zm4-3h2v9h-2zm4-4h2v13h-2z"/></svg>`,
+  wifi:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>`,
+  battery:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="13" x2="23" y2="11"/><rect x="3" y="8" width="13" height="8" fill="currentColor"/></svg>`,
+  tools:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+  tractor:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="16" r="4"/><circle cx="17" cy="17" r="3"/><path d="M11 12V7h4l2 5"/><path d="M7 12V8h4"/></svg>`,
+};
+
+/* Status bar */
+const statusBar = () => `
+<div class="statusbar">
+  <span>9:41</span>
+  <span class="right">
+    ${ICON.signal}${ICON.wifi}${ICON.battery}
+  </span>
+</div>`;
+
+/* Bottom nav generator */
+const nav = (active) => `
+<div class="tabbar">
+  <div class="tab ${active==='home'?'on':''}">${ICON.home}Home</div>
+  <div class="tab ${active==='search'?'on':''}">${ICON.search}Search</div>
+  <div class="tab ${active==='inbox'?'on':''}">${ICON.inbox}Inbox</div>
+  <div class="tab ${active==='profile'?'on':''}">${ICON.user}Profile</div>
+</div>`;
+
+/* ---------------- SCREEN BUILDERS ---------------- */
+function screenCreateAccount(){
+  return `
+  ${statusBar()}
+  <div class="topbar" style="padding-top:6px">
+    <div class="logo">
+      <div class="mk">${ICON.briefcase}</div>
+      <span>GachiWork</span>
+    </div>
+    <div class="lang">${ICON.lang}<span>English</span>${ICON.down}</div>
+  </div>
+  <div class="scrollview">
+  <div class="auth">
+    <div style="margin-top:4px">
+      <h2 style="font-size:24px;text-align:left">Create Account</h2>
+      <div class="sub" style="text-align:left;margin-top:6px">Start your journey safely and anonymously.<br/>Your privacy is our priority.</div>
+    </div>
+    <div class="toggle-row">
+      <div class="toggle on">${ICON.shield}<span>Full Privacy</span></div>
+      <div class="toggle">${ICON.briefcase}<span>Secure Work</span></div>
+    </div>
+    <div class="card">
+      <div class="field">
+        <label>Nickname (User ID)</label>
+        <div class="input-wrap"><input placeholder="e.g. BlueSkyWorker"/></div>
+        <div class="helper">Use a nickname. Do not use your real name for anonymity.</div>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <div class="input-wrap">${ICON.lock}<input type="password" value="••••••••"/>${ICON.eye}</div>
+      </div>
+      <div class="field">
+        <label>Nationality</label>
+        <div class="input-wrap">
+          <span style="color:#9CA3AF;flex:1">Select your country</span>
+          ${ICON.down}
+        </div>
+      </div>
+      <div class="field">
+        <label>Language</label>
+        <div class="input-wrap">
+          ${ICON.lang}
+          <span style="color:#9CA3AF;flex:1">Select your language</span>
+          ${ICON.down}
+        </div>
+        <div class="helper">Posts are auto-translated from your language.</div>
+      </div>
+      <button class="btn primary">Join GachiWork${ICON.arrow}</button>
+    </div>
+    <div class="bottom-link">Already have an account? <a href="#">Log in</a></div>
+    <div class="secure-pill">🔒 END-TO-END SECURE PLATFORM</div>
+    <div style="font-size:9px;color:var(--neutral);text-align:center;margin-top:4px;line-height:1.5">
+      By joining, you agree to our Terms of Service and Privacy Policy focusing on worker protection.
+    </div>
+  </div>
+  </div>`;
+}
+
+function screenSignIn(){
+  return `
+  ${statusBar()}
+  <div class="scrollview" style="background:linear-gradient(180deg,#EAF2FA 0%, #FFF4DD 110%)">
+  <div class="auth" style="padding-top:30px">
+    <div class="auth-logo">${ICON.briefcase}</div>
+    <h2 style="font-size:26px">GachiWork</h2>
+    <div class="sub">Welcome back, your community is waiting.</div>
+    <div class="card" style="margin-top:10px">
+      <div class="field">
+        <label>User ID (Anonymous ID)</label>
+        <div class="input-wrap">${ICON.finger}<input placeholder="Enter your ID"/></div>
+        <div class="helper">Your ID is found in your onboarding documents.</div>
+      </div>
+      <div class="field">
+        <label>Password <span class="link">Forgot Password?</span></label>
+        <div class="input-wrap">${ICON.lock}<input type="password" value="••••••••"/>${ICON.eye}</div>
+      </div>
+      <button class="btn primary">Sign In${ICON.arrow}</button>
+      <div class="divider">OR SECURE LINK</div>
+      <button class="btn ghost">${ICON.google}Sign in with Google</button>
+    </div>
+    <div class="bottom-link">Don't have an account? <a href="#">Sign Up</a></div>
+    <div style="display:flex;justify-content:space-between;margin-top:14px;font-size:9px;color:var(--neutral)">
+      <span>Privacy Policy</span><span>Terms of Service</span><span>Help Center</span>
+    </div>
+    <div style="text-align:center;margin-top:8px;font-size:9px;color:var(--neutral);letter-spacing:.1em;font-weight:600">GLOBAL SUPPORT AVAILABLE</div>
+  </div>
+  </div>`;
+}
+
+function screenHome(){
+  return `
+  ${statusBar()}
+  <div class="topbar">
+    <div class="logo">
+      <div class="mk">${ICON.briefcase}</div>
+      <span>GachiWork</span>
+    </div>
+    <div class="lang">${ICON.lang}</div>
+  </div>
+  <div class="scrollview">
+    <div class="home-hero">
+      <div class="h-top">
+        <div class="avatar">MZ</div>
+        <div class="h-name-block">
+          <div class="n1">GachiWork</div>
+          <div class="verified-pill">✓ VERIFIED E-9</div>
+        </div>
+      </div>
+      <div class="greet">
+        <h2>Hello, User_042</h2>
+        <p>Activity from your boards and communities.</p>
+      </div>
+    </div>
+    <div class="seg">
+      <div class="seg-tab on">${ICON.book} Followed Boards</div>
+      <div class="seg-tab">${ICON.user} Community Pages</div>
+    </div>
+    <div class="feed">
+      <div class="post">
+        <div class="post-tags">
+          <span class="tag blue">MANUFACTURING</span>
+          <span class="tag green">VIETNAM</span>
+          <span class="time">12m ago</span>
+        </div>
+        <h3>Has anyone had trouble with the new safety certification in Ansan?</h3>
+        <div class="post-meta">
+          <div class="user-chip"><div class="u-dot">U</div><span>User_992</span></div>
+          <div class="meta-right">${ICON.comment}<span>14</span>${ICON.heart}<span>5</span></div>
+        </div>
+      </div>
+
+      <div class="ad">
+        <span class="pill">OFFICIAL GUIDE</span>
+        <h3>Renewing your E-9 Visa?</h3>
+        <p>Step-by-step documentation guide for 2026 industrial workers.</p>
+        <button class="btn">Read Guide${ICON.arrow}</button>
+      </div>
+
+      <div class="post">
+        <div class="post-tags">
+          <span class="tag orange">AGRICULTURE</span>
+          <span class="tag" style="background:#FEE2E2;color:#991B1B">NEPAL</span>
+          <span class="time">2h ago</span>
+        </div>
+        <h3>Looking for a translation of the latest dorm regulations. My boss gave us a paper but it's only in Korean.</h3>
+        <div class="post-meta">
+          <div class="user-chip"><div class="u-dot">L</div><span>User_01532</span></div>
+          <div class="meta-right">${ICON.comment}<span>3</span>${ICON.heart}<span>2</span></div>
+        </div>
+      </div>
+
+      <div class="post">
+        <div class="post-tags">
+          <span class="tag purple">CONSTRUCTION</span>
+          <span class="tag" style="background:#FCE7F3;color:#9D174D">CAMBODIA</span>
+          <span class="time">5h ago</span>
+        </div>
+        <h3>Any recommended clinics in Pyeongtaek that are open on Sundays for workers?</h3>
+        <div class="post-meta">
+          <div class="user-chip"><div class="u-dot">A</div><span>User_841</span></div>
+          <div class="meta-right">${ICON.comment}<span>7</span>${ICON.heart}<span>11</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="fab">${ICON.plus}</div>
+  </div>
+  ${nav('home')}`;
+}
+
+function screenSearch(){
+  return `
+  ${statusBar()}
+  <div class="topbar">
+    <div class="menu">${ICON.menu}</div>
+    <div class="logo"><span>GachiWork</span></div>
+    <div style="width:22px"></div>
+  </div>
+  <div class="scrollview">
+    <h2 style="padding:10px 20px 4px;font-family:'Lexend';font-weight:700;font-size:22px;color:var(--ink)">Search</h2>
+    <div class="search-bar" style="background:#fff">${ICON.search}<span>Search boards, posts or keywords…</span></div>
+
+    <div class="sec-title">Recent Searches <a href="#">Clear</a></div>
+    <div class="recent-chips">
+      <span class="r-chip">${ICON.search}<span>dorm deduction</span><span class="x">×</span></span>
+      <span class="r-chip">${ICON.search}<span>overtime calculation</span><span class="x">×</span></span>
+      <span class="r-chip">${ICON.search}<span>안산 병원</span><span class="x">×</span></span>
+      <span class="r-chip">${ICON.search}<span>E-9 visa renewal</span><span class="x">×</span></span>
+      <span class="r-chip">${ICON.search}<span>payslip</span><span class="x">×</span></span>
+    </div>
+
+    <div class="sec-title">Top Boards</div>
+    <div class="top-boards">
+      <div class="tb-item">
+        <div class="tb-icon">${ICON.shield}</div>
+        <div class="tb-text">
+          <h4>Visa Extensions</h4>
+          <p>Navigating renewals and permanent residency</p>
+        </div>
+        <div class="tb-meta">
+          <div class="num">2.4k</div>
+          <div class="s"><span class="d"></span>Active Now</div>
+        </div>
+      </div>
+      <div class="tb-item">
+        <div class="tb-icon" style="background:#FEF3C7;color:#B45309">${ICON.tools}</div>
+        <div class="tb-text">
+          <h4>Workplace Safety</h4>
+          <p>Rights, equipment, and reporting protocols</p>
+        </div>
+        <div class="tb-meta">
+          <div class="num">1.8k</div>
+          <div class="s"><span class="d"></span>Active Now</div>
+        </div>
+      </div>
+      <div class="tb-item">
+        <div class="tb-icon" style="background:var(--tertiary);color:#10B981">${ICON.globe}</div>
+        <div class="tb-text">
+          <h4>Language Exchange</h4>
+          <p>Improve your fluency with colleagues</p>
+        </div>
+        <div class="tb-meta">
+          <div class="num">940</div>
+          <div class="s"><span class="d"></span>Active Now</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-title">Trending Topics</div>
+    <div class="trend-list">
+      <div class="trend-item">
+        <div class="trend-num">01</div>
+        <div class="trend-body">
+          <h4>New Dorm Regulations</h4>
+          <p>3.4k posts this week</p>
+        </div>
+        <div class="trend-ch up">↑ 12%</div>
+      </div>
+      <div class="trend-item">
+        <div class="trend-num">02</div>
+        <div class="trend-body">
+          <h4>Holiday Overtime Pay</h4>
+          <p>2.1k posts this week</p>
+        </div>
+        <div class="trend-ch up">↑ 8%</div>
+      </div>
+      <div class="trend-item">
+        <div class="trend-num">03</div>
+        <div class="trend-body">
+          <h4>Health Checkup Schedule</h4>
+          <p>1.5k posts this week</p>
+        </div>
+        <div class="trend-ch dn">↓ 4%</div>
+      </div>
+    </div>
+    <div style="height:90px"></div>
+  </div>
+  ${nav('search')}`;
+}
+
+function screenInbox(){
+  return `
+  ${statusBar()}
+  <div class="topbar">
+    <div class="menu">${ICON.menu}</div>
+    <h2 style="font-family:'Lexend';color:var(--primary);font-size:17px;font-weight:700">Inbox</h2>
+    <div style="width:22px"></div>
+  </div>
+  <div class="tabs-top" data-tab-group="inbox">
+    <div class="tt on" data-tab="notif">Notification</div>
+    <div class="tt" data-tab="chat">Chat</div>
+  </div>
+  <div class="scrollview">
+    <div class="tab-pane" data-pane="notif">
+      <div class="notif-list">
+        <div class="notif-item">
+          <div class="ic">${ICON.comment}</div>
+          <div class="body">
+            <h4>Anonymous_187 replied to your post</h4>
+            <p style="color:var(--primary);font-weight:600">Dorm deduction 300k</p>
+            <div class="t">2h ago</div>
+          </div>
+        </div>
+        <div class="notif-item">
+          <div class="ic">${ICON.comment}</div>
+          <div class="body">
+            <h4>Anonymous_305 also replied…</h4>
+            <p>Check out the latest discussion on your thread.</p>
+            <div class="t">1h ago</div>
+          </div>
+        </div>
+        <div class="notif-item ai read">
+          <div class="ic">${ICON.spark}</div>
+          <div class="body">
+            <h4>AI Guide updated…</h4>
+            <p>The AI concierge has new tips for your settlement process.</p>
+            <div class="t">3h ago</div>
+          </div>
+        </div>
+        <div class="notif-item thanks read">
+          <div class="ic">${ICON.heart}</div>
+          <div class="body">
+            <h4>Anonymous_042 thanked you…</h4>
+            <p>Your advice on visa processing was very helpful!</p>
+            <div class="t">1d ago</div>
+          </div>
+        </div>
+        <div class="notif-item welcome read">
+          <div class="ic">${ICON.spark}</div>
+          <div class="body">
+            <h4>Welcome to GachiWork!…</h4>
+            <p>We're glad to have you in our community of global workers.</p>
+            <div class="t">3d ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane hidden" data-pane="chat">
+      <div class="chat-list">
+        <div class="chat-item unread">
+          <div class="av">A</div>
+          <div class="body">
+            <h4>Anonymous_187</h4>
+            <p>Thanks! I'll check…</p>
+          </div>
+          <div class="right"><span class="t">2h ago</span><span class="n">2</span></div>
+        </div>
+        <div class="chat-item unread">
+          <div class="av">A</div>
+          <div class="body">
+            <h4>Anonymous_305</h4>
+            <p>Which center is closest to your dorm?</p>
+          </div>
+          <div class="right"><span class="t">5h ago</span><span class="n">1</span></div>
+        </div>
+        <div class="chat-item">
+          <div class="av">A</div>
+          <div class="body">
+            <h4>Anonymous_091</h4>
+            <p>${ICON.dblcheck}Yes the safety training is mandatory</p>
+          </div>
+          <div class="right"><span class="t" style="color:var(--neutral)">1d ago</span></div>
+        </div>
+        <div class="chat-item">
+          <div class="av">A</div>
+          <div class="body">
+            <h4>Anonymous_118</h4>
+            <p>${ICON.dblcheck}My factory is in Incheon, so…</p>
+          </div>
+          <div class="right"><span class="t" style="color:var(--neutral)">2d ago</span></div>
+        </div>
+        <div class="chat-item">
+          <div class="av">A</div>
+          <div class="body">
+            <h4>Anonymous_042</h4>
+            <p>${ICON.dblcheck}Got it, thank you for the help!</p>
+          </div>
+          <div class="right"><span class="t" style="color:var(--neutral)">3d ago</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  ${nav('inbox')}`;
+}
+
+function screenProfile(){
+  return `
+  ${statusBar()}
+  <div class="topbar">
+    <div class="logo"><span>GachiWork</span></div>
+    <div class="menu">${ICON.settings}</div>
+  </div>
+  <div class="scrollview">
+    <div class="profile-head">
+      <div class="avatar lg" style="margin:0 auto;background:linear-gradient(135deg,#1E3A5F,#2E74B5);color:#fff;border:4px solid #fff;box-shadow:0 10px 24px -12px rgba(0,0,0,.2)">👤</div>
+      <h3>User_042</h3>
+      <div class="meta">Manufacturing · Ansan, Gyeonggi-do · 🇻🇳 Vietnam</div>
+      <div class="verified-pill">✓ VERIFIED E-9</div>
+    </div>
+
+    <div class="trust-card">
+      <div class="trust-label">TRUST TEMPERATURE</div>
+      <div class="trust-bar">
+        <div class="indicator" style="left:72%"></div>
+      </div>
+      <div class="trust-scale">
+        <span>STABLE</span>
+        <span style="color:var(--primary);font-weight:700">VERIFIED</span>
+        <span class="flame">🔥 FLAMING REPUTATION</span>
+      </div>
+    </div>
+
+    <div class="seg-tab-wrap" data-tab-group="profile">
+      <div class="st on" data-ptab="posts">My Posts</div>
+      <div class="st" data-ptab="replies">Replies</div>
+      <div class="st" data-ptab="followers">Followers</div>
+    </div>
+
+    <div class="tab-pane" data-pane="posts">
+      <div class="post-item">
+        <div class="body">
+          <h4>🏠 Helping New Arrivals</h4>
+          <div class="time">2 hours ago · Community</div>
+          <p>Anyone looking for a room in Ansan? My landlord has a small studio available. Very friendly to E-9 workers! Send me a message if interested. 🏠</p>
+          <div class="footer">
+            <span style="display:flex;gap:3px;align-items:center">${ICON.heart}24</span>
+            <span style="display:flex;gap:3px;align-items:center">${ICON.comment}12</span>
+          </div>
+        </div>
+      </div>
+      <div class="post-item">
+        <div class="body">
+          <h4>🔧 Work Experience: Metal Shop</h4>
+          <div class="time">Yesterday · Experience</div>
+          <p>Sharing my 3 years of experience in the Siheung industrial zone. It was tough at first, but learning the technical Korean terms made everything easier…</p>
+          <div class="img-placeholder">🏭</div>
+          <div class="footer">
+            <span style="display:flex;gap:3px;align-items:center">${ICON.heart}156</span>
+            <span style="display:flex;gap:3px;align-items:center">${ICON.comment}48</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane hidden" data-pane="replies">
+      <div class="post-item">
+        <div class="body">
+          <h4 style="color:var(--primary);font-weight:600;font-size:11px">↳ Replying to Anonymous_042</h4>
+          <div class="time">3 hours ago · Manufacturing</div>
+          <p>₩300,000 total sounds high. I work at an electronics factory in Cheonan and we pay ₩200,000 for dorm + ₩50,000 for meals. Check with the labor counselor.</p>
+          <div class="footer">
+            <span style="display:flex;gap:3px;align-items:center">${ICON.heart}42</span>
+            <span style="display:flex;gap:3px;align-items:center">${ICON.comment}8</span>
+          </div>
+        </div>
+      </div>
+      <div class="post-item">
+        <div class="body">
+          <h4 style="color:var(--primary);font-weight:600;font-size:11px">↳ Replying to User_992</h4>
+          <div class="time">Yesterday · Safety</div>
+          <p>The new certification for Ansan is only needed if you handle chemicals. Ask your supervisor — it should be provided free by the company.</p>
+          <div class="footer">
+            <span style="display:flex;gap:3px;align-items:center">${ICON.heart}18</span>
+            <span style="display:flex;gap:3px;align-items:center">${ICON.comment}3</span>
+          </div>
+        </div>
+      </div>
+      <div class="post-item">
+        <div class="body">
+          <h4 style="color:var(--primary);font-weight:600;font-size:11px">↳ Replying to User_01532</h4>
+          <div class="time">2 days ago · Agriculture</div>
+          <p>I translated the key points of the dorm regulations. DM me and I'll share — written in Vietnamese and English.</p>
+          <div class="footer">
+            <span style="display:flex;gap:3px;align-items:center">${ICON.heart}67</span>
+            <span style="display:flex;gap:3px;align-items:center">${ICON.comment}15</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane hidden" data-pane="followers">
+      <div style="padding:0 16px;display:flex;flex-direction:column;gap:8px">
+        <div class="follower-item">
+          <div class="av" style="background:linear-gradient(135deg,#FBBF24,#F59E0B)">V</div>
+          <div class="body">
+            <h4>Anonymous_187</h4>
+            <p>🇻🇳 Vietnam · Electronics · Cheonan</p>
+          </div>
+          <button class="btn-follow on">Following</button>
+        </div>
+        <div class="follower-item">
+          <div class="av" style="background:linear-gradient(135deg,#60A5FA,#2563EB)">N</div>
+          <div class="body">
+            <h4>Anonymous_042</h4>
+            <p>🇳🇵 Nepal · Agriculture · Cheongju</p>
+          </div>
+          <button class="btn-follow on">Following</button>
+        </div>
+        <div class="follower-item">
+          <div class="av" style="background:linear-gradient(135deg,#A78BFA,#7C3AED)">C</div>
+          <div class="body">
+            <h4>Anonymous_091</h4>
+            <p>🇰🇭 Cambodia · Construction · Pyeongtaek</p>
+          </div>
+          <button class="btn-follow">Follow</button>
+        </div>
+        <div class="follower-item">
+          <div class="av" style="background:linear-gradient(135deg,#F472B6,#DB2777)">I</div>
+          <div class="body">
+            <h4>Anonymous_305</h4>
+            <p>🇮🇩 Indonesia · Fishing · Busan</p>
+          </div>
+          <button class="btn-follow">Follow</button>
+        </div>
+        <div class="follower-item">
+          <div class="av" style="background:linear-gradient(135deg,#34D399,#059669)">M</div>
+          <div class="body">
+            <h4>Anonymous_118</h4>
+            <p>🇲🇲 Myanmar · Plastics · Gimpo</p>
+          </div>
+          <button class="btn-follow on">Following</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:90px"></div>
+  </div>
+  ${nav('profile')}`;
+}
+
+/* ---------------- GALLERY ---------------- */
+const SCREENS = [
+  {key:'signin',    label:'01', name:'Sign In',        build:screenSignIn},
+  {key:'create',    label:'02', name:'Create Account', build:screenCreateAccount},
+  {key:'home',      label:'03', name:'Home Feed',      build:screenHome},
+  {key:'search',    label:'04', name:'Search',         build:screenSearch},
+  {key:'inbox',     label:'05', name:'Inbox',          build:screenInbox},
+  {key:'profile',   label:'06', name:'Profile',        build:screenProfile},
+];
+
+const gallery = document.getElementById('gallery');
+SCREENS.forEach(s => {
+  const wrap = document.createElement('div');
+  wrap.className = 'phone-wrap';
+  wrap.innerHTML = `
+    <div class="phone-label">${s.label}<b>${s.name}</b></div>
+    <div class="phone" data-screen="${s.key}">
+      <div class="notch"></div>
+      <div class="phone-screen">${s.build()}</div>
+    </div>`;
+  gallery.appendChild(wrap);
+  initTabs(wrap);
+});
+
+/* Tab switching (Inbox + Profile) */
+function initTabs(scope){
+  // Inbox: Notification / Chat
+  scope.querySelectorAll('.tt[data-tab]').forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const group = tab.closest('[data-tab-group]');
+      if(!group) return;
+      const phoneScreen = group.closest('.phone-screen');
+      const target = tab.dataset.tab;
+      group.querySelectorAll('.tt').forEach(t => t.classList.toggle('on', t === tab));
+      phoneScreen.querySelectorAll('.tab-pane[data-pane]').forEach(p => {
+        if(['notif','chat'].includes(p.dataset.pane)){
+          p.classList.toggle('hidden', p.dataset.pane !== target);
+        }
+      });
+    });
+  });
+  // Profile: Posts / Replies / Followers
+  scope.querySelectorAll('.st[data-ptab]').forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const group = tab.closest('[data-tab-group]');
+      if(!group) return;
+      const phoneScreen = group.closest('.phone-screen');
+      const target = tab.dataset.ptab;
+      group.querySelectorAll('.st').forEach(t => t.classList.toggle('on', t === tab));
+      phoneScreen.querySelectorAll('.tab-pane[data-pane]').forEach(p => {
+        if(['posts','replies','followers'].includes(p.dataset.pane)){
+          p.classList.toggle('hidden', p.dataset.pane !== target);
+        }
+      });
+    });
+  });
+}
+
+/* modal */
+const modal = document.getElementById('modal');
+const modalBody = document.getElementById('modalBody');
+const modalClose = document.getElementById('modalClose');
+gallery.addEventListener('click', (e) => {
+  // ignore clicks on interactive tabs
+  if(e.target.closest('.tt[data-tab], .st[data-ptab]')) return;
+  const phone = e.target.closest('.phone');
+  if(!phone) return;
+  const key = phone.dataset.screen;
+  const s = SCREENS.find(x => x.key === key);
+  modalBody.innerHTML = `
+    <div class="phone" style="max-width:360px;width:92vw">
+      <div class="notch"></div>
+      <div class="phone-screen">${s.build()}</div>
+    </div>`;
+  modal.classList.add('open');
+  initTabs(modalBody);
+});
+modalClose.addEventListener('click', () => modal.classList.remove('open'));
+modal.addEventListener('click', (e) => {
+  if(e.target === modal) modal.classList.remove('open');
+});
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') modal.classList.remove('open');
+});
+</script>
+</body>
+</html>
