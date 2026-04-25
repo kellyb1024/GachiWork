@@ -1,0 +1,66 @@
+/*
+ * GachiWork Design Tokens — 단일 출처 (Single Source of Truth)
+ * v0.1 · 2026-04-25
+ *
+ * 사용 방법:
+ *   ① Brand Kit:  brand/brand_kit.html 의 <link rel="stylesheet" href="./tokens.css">
+ *   ② 실제 앱:    web/app/globals.css 에서 @import "../../brand/tokens.css"
+ *   ③ Tailwind:   web/tailwind.config.ts 에서 var(--primary) 등으로 참조
+ *
+ * 이 파일 한 곳만 수정하면 두 곳 모두 자동 반영됩니다.
+ */
+
+:root {
+  /* === Brand colors (locked — 블루 + 노랑 두 가지만) === */
+  --primary: #0047AB;       /* Cobalt — 메인 */
+  --primary-700: #00357F;   /* hover, depth */
+  --primary-50: #E5EEFA;    /* soft bg, chips */
+  --secondary: #F59E0B;     /* Amber — 강조 (베리에이션 없음, 단일 색) */
+
+  /* === Neutrals (the real workhorse) === */
+  --ink: #111827;
+  --ink-soft: #4B5563;
+  --neutral: #6B7280;
+  --line: #E5E7EB;
+  --line-soft: #F3F4F6;
+  --bg: #F8FAFC;
+  --card: #FFFFFF;
+
+  /* === Functional colors (브랜드가 아님 — 특정 의미만 사용) === */
+  /* 위험 알림: 안전상 빨강 필수 */
+  --danger: #FB1616;
+  --danger-50: #FFEAEA;
+  /* AI 출처 라벨: HCI 원칙 — AI 생성 콘텐츠는 인간 콘텐츠와 시각 구분 */
+  --ai: #7C3AED;
+  --ai-50: #EDE9FE;
+
+  /* === Spacing (4px base, 8 steps only) === */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-12: 48px;
+  --s-16: 64px;
+
+  /* === Radius (4 steps only) === */
+  --r-1: 4px;     /* tags, chips */
+  --r-2: 8px;     /* buttons, inputs */
+  --r-4: 16px;    /* cards */
+  --r-pill: 999px;
+
+  /* === Elevation (3 steps only) === */
+  --e-0: none;
+  --e-1: 0 1px 2px rgba(17,24,39,.06), 0 1px 3px rgba(17,24,39,.04);
+  --e-2: 0 4px 12px rgba(17,24,39,.08), 0 2px 4px rgba(17,24,39,.04);
+
+  /* === Motion (3 steps only) === */
+  --t-fast: 150ms;
+  --t-base: 250ms;
+  --t-slow: 400ms;
+  --ease: cubic-bezier(.2,.8,.2,1);
+
+  /* === Type === */
+  --font: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+}
