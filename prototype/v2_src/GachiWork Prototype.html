@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>GachiWork — Interactive Prototype</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <template id="__bundler_thumbnail">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+      <rect width="200" height="200" fill="#2563EB"/>
+      <rect x="60" y="40" width="80" height="120" rx="14" fill="#fff" opacity=".95"/>
+      <rect x="70" y="58" width="60" height="6" rx="3" fill="#2563EB"/>
+      <rect x="70" y="72" width="40" height="4" rx="2" fill="#94A3B8"/>
+      <circle cx="100" cy="118" r="14" fill="#F97316"/>
+      <text x="100" y="178" font-family="system-ui,sans-serif" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">Gachi</text>
+    </svg>
+  </template>
+  <!-- Desktop stage: iPhone 13 mini framed on a neutral wall -->
+  <div id="stage" class="stage">
+    <div class="stage-head">
+      <div class="brand">
+        <img class="brand-mark" src="assets/gachiwork-logo.png" onerror="this.onerror=null;this.src=window.__GW_LOGO" alt="GachiWork"/>
+        <div>
+          <div class="brand-title">Gachi<em>Work</em></div>
+          <div class="brand-sub">Interactive Prototype</div>
+        </div>
+      </div>
+      <div class="stage-actions">
+        <button class="reset-btn" id="resetBtn" title="Back to start">⟲ Reset</button>
+      </div>
+    </div>
+
+    <!-- Phone device frame. On small viewports the frame dissolves into fullscreen. -->
+    <div class="phone-frame" id="phoneFrame">
+      <div class="phone-side left"></div>
+      <div class="phone-side right"></div>
+      <div class="phone-side top"></div>
+      <div class="phone-side bottom"></div>
+      <div class="phone-notch"></div>
+      <div class="phone-screen" id="app">
+        <!-- React root -->
+      </div>
+    </div>
+
+    <div class="stage-footnote">
+      Group 18
+    </div>
+  </div>
+
+  <!-- Libraries -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <!-- Inlined logo assets (so standalone bundle works) -->
+  <script src="src/logo-data.js"></script>
+
+  <!-- App code -->
+  <script type="text/babel" src="src/icons.jsx"></script>
+  <script type="text/babel" src="src/data.jsx"></script>
+  <script type="text/babel" src="src/ui.jsx"></script>
+  <script type="text/babel" src="src/screens/Chrome.jsx"></script>
+  <script type="text/babel" src="src/screens/Auth.jsx"></script>
+  <script type="text/babel" src="src/screens/Home.jsx"></script>
+  <script type="text/babel" src="src/screens/Composer.jsx"></script>
+  <script type="text/babel" src="src/screens/PostDetail.jsx"></script>
+  <script type="text/babel" src="src/screens/Board.jsx"></script>
+  <script type="text/babel" src="src/screens/BoardsHub.jsx"></script>
+  <script type="text/babel" src="src/screens/Search.jsx"></script>
+  <script type="text/babel" src="src/screens/Inbox.jsx"></script>
+  <script type="text/babel" src="src/screens/Profile.jsx"></script>
+  <script type="text/babel" src="src/screens/RiskAlert.jsx"></script>
+  <script type="text/babel" src="src/screens/Expert.jsx"></script>
+  <script type="text/babel" src="src/screens/ChatRoom.jsx"></script>
+  <script type="text/babel" src="src/App.jsx"></script>
+</body>
+</html>

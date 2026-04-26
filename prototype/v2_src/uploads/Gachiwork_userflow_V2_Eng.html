@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GachiWork — User Flow</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --c-bg: #FAFAF8;
+  --c-surface: #FFFFFF;
+  --c-text: #1A1A1A;
+  --c-text-sub: #6B6B6B;
+  --c-text-hint: #9E9E9E;
+  --c-border: #E8E8E4;
+  --c-border-light: #F0F0EC;
+
+  --c-purple-50: #EEEDFE;
+  --c-purple-100: #CECBF6;
+  --c-purple-600: #534AB7;
+  --c-purple-800: #3C3489;
+
+  --c-gray-50: #F1EFE8;
+  --c-gray-100: #D3D1C7;
+  --c-gray-600: #5F5E5A;
+  --c-gray-800: #444441;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--c-bg);
+  color: var(--c-text);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 32px 80px;
+}
+
+/* ── Header ── */
+header {
+  text-align: center;
+  margin-bottom: 64px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--c-border);
+}
+
+header .label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--c-purple-600);
+  background: var(--c-purple-50);
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+}
+
+header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+
+header h1 span { color: var(--c-purple-600); }
+
+header p {
+  font-size: 15px;
+  color: var(--c-text-sub);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* ── Positioning before/after ── */
+.positioning {
+  max-width: 640px;
+  margin: 28px auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  text-align: left;
+}
+
+.positioning .pos-card {
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.6;
+  background: var(--c-gray-50);
+  border: 1px solid var(--c-gray-100);
+  color: var(--c-gray-800);
+}
+
+.positioning .pos-card.after {
+  background: var(--c-purple-50);
+  border-color: var(--c-purple-100);
+  color: var(--c-purple-800);
+}
+
+.positioning .pos-card strong {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+  opacity: 0.75;
+}
+
+/* ── Section ── */
+.flow-section {
+  margin-bottom: 72px;
+}
+
+.flow-section:last-of-type { margin-bottom: 48px; }
+
+.section-header {
+  margin-bottom: 32px;
+}
+
+.section-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-text-hint);
+  margin-bottom: 8px;
+}
+
+.section-header h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+
+.section-header p {
+  font-size: 14px;
+  color: var(--c-text-sub);
+  line-height: 1.7;
+}
+
+/* ── The Gap Box ── */
+.problem-context {
+  background: var(--c-gray-50);
+  border-left: 3px solid var(--c-gray-600);
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 28px;
+  font-size: 13px;
+  color: var(--c-gray-800);
+  line-height: 1.7;
+}
+
+.problem-context strong {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* ── Flow Container ── */
+.flow-container {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 16px;
+  padding: 40px 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.flow-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--c-gray-600), var(--c-purple-600));
+  border-radius: 16px 16px 0 0;
+}
+
+/* ── Flow Steps ── */
+.flow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.flow-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  position: relative;
+}
+
+.step-line-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  position: relative;
+}
+
+.step-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2.5px solid;
+  background: var(--c-surface);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  margin-top: 18px;
+}
+
+.step-dot.purple { border-color: var(--c-purple-600); }
+.step-dot.gray { border-color: var(--c-gray-600); }
+
+.step-dot.filled.purple { background: var(--c-purple-600); border-color: var(--c-purple-600); }
+.step-dot.filled.gray { background: var(--c-gray-600); border-color: var(--c-gray-600); }
+
+.step-connector {
+  width: 1.5px;
+  flex-grow: 1;
+  min-height: 20px;
+  background: var(--c-border);
+}
+
+.step-content {
+  flex: 1;
+  padding: 12px 0 28px;
+  min-width: 0;
+}
+
+.step-content h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.step-content .desc {
+  font-size: 13px;
+  color: var(--c-text-sub);
+  margin-bottom: 0;
+}
+
+/* ── Tech Detail Box (AI implementation note) ── */
+.tech-detail {
+  background: var(--c-purple-50);
+  border: 1px solid rgba(83, 74, 183, 0.15);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--c-purple-800);
+  line-height: 1.7;
+}
+
+.tech-detail strong {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  font-size: 11px;
+  display: block;
+  margin-bottom: 2px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--c-purple-600);
+}
+
+/* ── Branch ── */
+.branch-group {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.branch-card {
+  flex: 1;
+  padding: 14px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.branch-card.purple-card {
+  background: var(--c-purple-50);
+  border: 1px solid rgba(83, 74, 183, 0.15);
+}
+
+.branch-card.gray-card {
+  background: var(--c-gray-50);
+  border: 1px solid rgba(95, 94, 90, 0.15);
+}
+
+.branch-card h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.branch-card.purple-card h4 { color: var(--c-purple-800); }
+.branch-card.gray-card h4 { color: var(--c-gray-800); }
+
+.branch-card p {
+  font-size: 12px;
+  color: var(--c-text-sub);
+  line-height: 1.6;
+}
+
+/* ── Solution Tag ── */
+.solution-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-top: 8px;
+}
+
+.solution-tag.purple-tag {
+  background: var(--c-purple-50);
+  color: var(--c-purple-800);
+}
+
+.solution-tag.gray-tag {
+  background: var(--c-gray-50);
+  color: var(--c-gray-800);
+}
+
+.solution-tag::before {
+  content: '→';
+  font-size: 10px;
+}
+
+/* ── Loop Indicator (AI reinforcing loop) ── */
+.loop-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 10px 16px;
+  background: var(--c-purple-50);
+  border: 1px dashed var(--c-purple-600);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--c-purple-800);
+}
+
+.loop-indicator .loop-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* ── Color Legend ── */
+.color-legend {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 16px;
+  padding: 36px 32px;
+  margin-top: 48px;
+}
+
+.color-legend h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.color-legend > p {
+  font-size: 13px;
+  color: var(--c-text-sub);
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--c-bg);
+}
+
+.legend-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.legend-swatch.purple { background: var(--c-purple-600); }
+.legend-swatch.gray { background: var(--c-gray-600); }
+
+.legend-item h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.legend-item p {
+  font-size: 12px;
+  color: var(--c-text-sub);
+  line-height: 1.6;
+}
+
+/* ── Divider ── */
+.section-divider {
+  width: 48px;
+  height: 1px;
+  background: var(--c-border);
+  margin: 0 auto 72px;
+}
+
+/* ── Footer ── */
+footer {
+  text-align: center;
+  padding-top: 40px;
+  border-top: 1px solid var(--c-border);
+  margin-top: 48px;
+}
+
+footer p {
+  font-size: 12px;
+  color: var(--c-text-hint);
+}
+
+footer .brand {
+  font-weight: 600;
+  color: var(--c-purple-600);
+}
+
+/* ── Last step no connector ── */
+.flow-step:last-child .step-connector { display: none; }
+.flow-step:last-child .step-content { padding-bottom: 0; }
+
+/* ── Overview Diagram ── */
+.overview-section {
+  margin-bottom: 48px;
+}
+
+.overview-section .section-header {
+  margin-bottom: 32px;
+}
+
+.overview-canvas {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 16px;
+  padding: 40px 24px 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.overview-canvas::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--c-gray-600), var(--c-purple-600));
+  border-radius: 16px 16px 0 0;
+}
+
+.overview-svg text { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+
+.overview-note {
+  font-size: 13px;
+  color: var(--c-text-sub);
+  text-align: center;
+  margin-top: 20px;
+  line-height: 1.7;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .page-container { padding: 40px 20px 60px; }
+  .flow-container { padding: 28px 20px; }
+  .legend-grid { grid-template-columns: 1fr; }
+  .branch-group { flex-direction: column; }
+  .positioning { grid-template-columns: 1fr; }
+  header h1 { font-size: 26px; }
+  .overview-canvas { padding: 28px 12px 24px; }
+}
+</style>
+</head>
+<body>
+<div class="page-container">
+
+<!-- Header -->
+<header>
+  <div class="label">User Flow Document</div>
+  <h1><span>Gachi</span>Work — A Peer Network for E-9 Workers</h1>
+  <p>An industry-focused peer network connecting E-9 foreign workers in Korea. AI removes language gaps and carries accumulated colleague experiences across the network, becoming more intelligent over time. This document maps the 4-phase user journey from first contact to active participation.</p>
+
+  <div class="positioning">
+    <div class="pos-card before">
+      <strong>Before — AI focused</strong>
+      "A community that uses AI for translation and RAG for answering."
+    </div>
+    <div class="pos-card after">
+      <strong>After — Network focused</strong>
+      "An industry-focused peer network. AI removes language gaps and transfers accumulated experiences to colleagues, becoming more intelligent over time."
+    </div>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════ -->
+<!-- FLOW 1: Onboarding -->
+<!-- ═══════════════════════════════════════ -->
+<section class="flow-section">
+  <div class="section-header">
+    <div class="section-number">Flow 01</div>
+    <h2>Onboarding — From install to joining the network</h2>
+    <p>Onboarding routes users into their industry peer network in the fewest possible steps, built around the language environment of foreign workers.</p>
+  </div>
+
+  <div class="problem-context">
+    <strong>The gap</strong>
+    E-9 workers are confined to assigned workplaces, and same-industry peers are scattered across the country. With workers from 17 countries, language further blocks access to informal information. Placing <em>native-language setup</em> and <em>industry selection</em> at the very start turns the first screen into an exit from isolation.
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-steps">
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>App install</h3>
+          <p class="desc">Through peer recommendation, QR posters at worksites, or guidance during mandatory employment training.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>Native-language selection</h3>
+          <p class="desc">All UI, notifications, and AI responses are delivered in the chosen language from this point forward.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>Quick signup — phone verification</h3>
+          <p class="desc">Phone verification only. No email, no extensive personal information.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>Industry selection</h3>
+          <p class="desc">Manufacturing, agriculture &amp; livestock, fisheries, or services — the choice becomes the key for peer network matching.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+        </div>
+        <div class="step-content">
+          <h3>Entering the industry network</h3>
+          <p class="desc">The feed for the chosen industry appears. Peer questions and answers, along with AI responses, are all shown in the user's native language.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ═══════════════════════════════════════ -->
+<!-- FLOW 2: Core Usage -->
+<!-- ═══════════════════════════════════════ -->
+<section class="flow-section">
+  <div class="section-header">
+    <div class="section-number">Flow 02</div>
+    <h2>Core usage — Peer exchange, enabled by AI</h2>
+    <p>Workers post in their native language. AI auto-translates to every industry peer; when the post is detected as a question, AI posts an auto-reply in the thread. Peers add their own replies over time — all back-translated into the questioner's language.</p>
+  </div>
+
+  <div class="problem-context">
+    <strong>The gap</strong>
+    Frontline questions — whether dormitory deductions are reasonable, whether overtime can be refused — are informal by nature and have no official answer channel. Only same-industry peers can share that experiential knowledge, yet the 17-country language gap made reaching those peers impossible.
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-steps">
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>Question posted in native language</h3>
+          <p class="desc">Example: 🇲🇲 "Is a 300,000 KRW dormitory deduction normal?"</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot filled purple"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>AI auto-translation — across the 17 main languages</h3>
+          <p class="desc">The post is translated in real time into the primary languages of 17 origin countries — Vietnamese, Nepali, Indonesian, and others — so every peer in the same industry sees it in their own language.</p>
+          <div class="tech-detail">
+            <strong>Implementation — Multilingual real-time translation</strong>
+            An LLM-based translation API starts from a general-purpose baseline, then gradually adapts to industry-specific vocabulary (injection molding, press, dormitory deductions) and frontline expressions accumulated in the community — pushing contextual accuracy beyond what a generic translator offers.
+          </div>
+          <span class="solution-tag purple-tag">Structural fix for the 17-language gap</span>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>Broadcast across the industry network</h3>
+          <p class="desc">Because the network is organized by industry rather than by language, the question reaches every peer in the same sector regardless of nationality.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot filled purple"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>🤖 AI auto-reply — when the post is a question</h3>
+          <p class="desc">An AI agent classifies each post. If it is detected as a question, AI posts an auto-reply in the same thread, just like any other comment. The reply draws from two sources depending on the question type.</p>
+          <div class="branch-group">
+            <div class="branch-card purple-card">
+              <h4>Daily-life questions</h4>
+              <p>A general LLM summarizes accumulated peer experiences via RAG. The answer grows more accurate as more community experiences accumulate.</p>
+            </div>
+            <div class="branch-card purple-card">
+              <h4>Legal / sensitive questions</h4>
+              <p>Answers are grounded in official documents (labor law, SOPs) for accuracy, with a link to the official source.</p>
+            </div>
+          </div>
+          <div class="tech-detail">
+            <strong>Implementation — Question detection + RAG</strong>
+            A lightweight classifier tags each new post as question / non-question. For questions, a RAG pipeline retrieves the most relevant peer experiences and official documents from a vector database, then generates a reply in the questioner's native language. Peer reactions to the AI reply feed back into the store — the network becomes more intelligent as it grows.
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>👥 Peer replies accumulate in the thread</h3>
+          <p class="desc">Peers from across the 17 countries add their own experiences as separate replies, each written in their own language — posted alongside the AI reply in the same thread.<br>Example: 🇻🇳 "Ours is 200,000"</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot filled purple"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>All answers back-translated to the questioner's language</h3>
+          <p class="desc">Answers written across many native languages are automatically converted into the questioner's language, making the exchange feel like a conversation between speakers of a single language.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+        </div>
+        <div class="step-content">
+          <h3>Worker reaches a judgment</h3>
+          <p class="desc">With peer experience (a real-world benchmark) and legal grounds (the official standard) side by side, the worker can judge whether their situation is within normal range.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ═══════════════════════════════════════ -->
+<!-- FLOW 3: Rights Protection -->
+<!-- ═══════════════════════════════════════ -->
+<section class="flow-section">
+  <div class="section-header">
+    <div class="section-number">Flow 03</div>
+    <h2>Rights protection — From signal detection to expert connection</h2>
+    <p>Risk signals surface during ordinary community activity. Without having to find a separate reporting channel, the path to resolution stays continuous within the platform.</p>
+  </div>
+
+  <div class="problem-context">
+    <strong>The gap</strong>
+    Workers facing wage theft or mistreatment often have no native-language guidance for filing a report, and fear of employer retaliation leads many to abandon the official channels. A peer's lived experience is a far more actionable basis for action than a translated manual, but isolation blocks that path.
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-steps">
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>Ordinary community post</h3>
+          <p class="desc">A worker shares a question or experience. Anonymous posting is supported given the risk of employer retaliation.<br>Example: "My salary hasn't come in for 3 months — is this normal?"</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot filled purple"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>AI risk-signal detection</h3>
+          <p class="desc">An AI agent analyzes post text, recognizing keywords and contextual patterns tied to wage theft, safety incidents, or mistreatment.</p>
+          <div class="tech-detail">
+            <strong>Implementation — Risk-detection agent</strong>
+            A dedicated detection agent runs independently of translation and search. Beyond keyword matching, it reads contextual patterns (e.g., duration + non-payment) and continuously improves its precision by referencing the accumulated case history.
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot filled purple"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>Native-language rights guidance</h3>
+          <p class="desc">The worker receives — as a private notification, not a public post — guidance in their native language on remediation procedures and relevant agencies (Ministry of Employment and Labor, Foreign Workforce Support Centers, National Human Rights Commission).</p>
+          <span class="solution-tag purple-tag">In-platform guidance, no separate channel needed</span>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot filled purple"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>AI first-line consultation</h3>
+          <p class="desc">The AI summarizes the situation and explains applicable statutes in the worker's native language, grounded in official legal sources.<br>Example: "Under Article 36 of the Labor Standards Act, you can claim unpaid wages within 14 days of separation."</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+        </div>
+        <div class="step-content">
+          <h3>Escalation when needed</h3>
+          <p class="desc">When AI consultation alone is not enough, two paths open to the worker.</p>
+          <div class="branch-group">
+            <div class="branch-card gray-card">
+              <h4>Expert connection</h4>
+              <p>A direct in-platform connection to labor attorneys and other professionals.</p>
+            </div>
+            <div class="branch-card gray-card">
+              <h4>Peer experience</h4>
+              <p>The AI surfaces community posts from peers who resolved similar situations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ═══════════════════════════════════════ -->
+<!-- FLOW 4: Retention -->
+<!-- ═══════════════════════════════════════ -->
+<section class="flow-section">
+  <div class="section-header">
+    <div class="section-number">Flow 04</div>
+    <h2>Retention — From member to active contributor</h2>
+    <p>Onboarding brings a worker into the network, but what turns a passive viewer into an active contributor is the first post and the first answer received. This flow traces that transition and the self-reinforcing loop it creates.</p>
+  </div>
+
+  <div class="problem-context">
+    <strong>The gap</strong>
+    A network is only valuable with active members, not just visitors. Most workers who onboard will browse peer content quietly; what pushes someone to post, answer, and return is the realization that "someone in my situation is here" — followed by the value of the first exchange they receive.
+  </div>
+
+  <div class="flow-container">
+    <div class="flow-steps">
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>Passive browsing in the network</h3>
+          <p class="desc">After onboarding, the worker browses peer posts in their industry. The realization forms: "Someone in my situation is here."</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>First question posted</h3>
+          <p class="desc">The worker writes their own question in native language. This moment marks the transition from information consumer to network participant.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot filled purple"></div>
+          <div class="step-connector"></div>
+        </div>
+        <div class="step-content">
+          <h3>Peer + AI answers received</h3>
+          <p class="desc">Peer answers arrive alongside AI-generated summaries. The worker experiences the network's value firsthand.</p>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="step-line-area">
+          <div class="step-dot gray"></div>
+        </div>
+        <div class="step-content">
+          <h3>Active network member</h3>
+          <p class="desc">New questions and answering others' questions follow. The worker settles in as an active member.</p>
+
+          <div class="loop-indicator">
+            <span class="loop-icon">↻</span>
+            <div>
+              <strong>Self-reinforcing loop</strong><br>
+              Members ↑ → Experience data ↑ → Translation · search · detection ↑ → Network value ↑ → Members ↑<br>
+              Accumulated experience data cannot be replicated.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════ -->
+<!-- Color Legend -->
+<!-- ═══════════════════════════════════════ -->
+<div class="color-legend">
+  <h2>Color legend</h2>
+  <p>Simplified to a single distinction: where AI is active vs. everything else.</p>
+
+  <div class="legend-grid">
+
+    <div class="legend-item">
+      <div class="legend-swatch purple"></div>
+      <div>
+        <h4>Purple — AI at work</h4>
+        <p>Translation, RAG search, risk detection, answer generation. The moments where the network's intelligence compounds through accumulated data.</p>
+      </div>
+    </div>
+
+    <div class="legend-item">
+      <div class="legend-swatch gray"></div>
+      <div>
+        <h4>Gray — User &amp; system flow</h4>
+        <p>User actions, system broadcasts, context — kept visually quiet so the AI moments stand out.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- OVERVIEW -->
+<!-- ═══════════════════════════════════════ -->
+<section class="overview-section">
+  <div class="section-header">
+    <div class="section-number">Overview</div>
+    <h2>Full user journey — how the 4 flows connect</h2>
+    <p>The four flows are one continuous journey. A worker onboards (Flow 01), engages in core exchange (Flow 02), branches to rights protection if needed (Flow 03), and settles into active network membership (Flow 04) — feeding the self-reinforcing loop that makes the network more intelligent over time.</p>
+  </div>
+
+  <div class="overview-canvas">
+    <svg class="overview-svg" width="100%" viewBox="0 0 680 490">
+      <defs>
+        <marker id="ov-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+        <marker id="ov-arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- ── FLOW 01: Onboarding ── -->
+      <rect x="80" y="30" width="340" height="74" rx="12" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1"/>
+      <rect x="80" y="30" width="340" height="26" rx="12" fill="#F1EFE8" stroke="none"/>
+      <rect x="80" y="42" width="340" height="14" rx="0" fill="#F1EFE8" stroke="none"/>
+      <text x="250" y="48" text-anchor="middle" font-size="11" font-weight="600" fill="#444441">FLOW 01 · Onboarding</text>
+      <text x="250" y="80" text-anchor="middle" font-size="11" fill="#6B6B6B">Native language → Industry → Quick signup → Network entry</text>
+
+      <!-- Arrow 01→02 -->
+      <line x1="250" y1="106" x2="250" y2="138" stroke="#B4B2A9" stroke-width="1.5" marker-end="url(#ov-arrow)"/>
+
+      <!-- ── FLOW 02: Core ── -->
+      <rect x="80" y="142" width="340" height="118" rx="12" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1"/>
+      <rect x="80" y="142" width="340" height="26" rx="12" fill="#F1EFE8" stroke="none"/>
+      <rect x="80" y="154" width="340" height="14" rx="0" fill="#F1EFE8" stroke="none"/>
+      <text x="250" y="160" text-anchor="middle" font-size="11" font-weight="600" fill="#444441">FLOW 02 · Core network activity</text>
+
+      <!-- Inner chips: AI steps highlighted purple, peer/user steps in gray -->
+      <rect x="88" y="182" width="70" height="24" rx="12" fill="#F1EFE8" stroke="none"/>
+      <text x="123" y="198" text-anchor="middle" font-size="11" fill="#444441">Native post</text>
+
+      <text x="164" y="198" text-anchor="middle" font-size="11" fill="#9E9E9E">→</text>
+
+      <rect x="172" y="182" width="78" height="24" rx="12" fill="#EEEDFE" stroke="none"/>
+      <text x="211" y="198" text-anchor="middle" font-size="11" font-weight="500" fill="#3C3489">AI translate</text>
+
+      <text x="256" y="198" text-anchor="middle" font-size="11" fill="#9E9E9E">→</text>
+
+      <rect x="264" y="182" width="60" height="24" rx="12" fill="#EEEDFE" stroke="none"/>
+      <text x="294" y="198" text-anchor="middle" font-size="11" font-weight="500" fill="#3C3489">AI reply</text>
+
+      <text x="330" y="199" text-anchor="middle" font-size="13" font-weight="500" fill="#6B6B6B">+</text>
+
+      <rect x="336" y="182" width="78" height="24" rx="12" fill="#F1EFE8" stroke="none"/>
+      <text x="375" y="198" text-anchor="middle" font-size="11" fill="#444441">Peer replies</text>
+
+      <text x="250" y="234" text-anchor="middle" font-size="11" fill="#6B6B6B">Peer experience + Legal grounds</text>
+      <text x="250" y="250" text-anchor="middle" font-size="11" fill="#6B6B6B">→ Worker reaches a judgment</text>
+
+      <!-- Branch arrow to FLOW 03 -->
+      <line x1="420" y1="201" x2="462" y2="201" stroke="#B4B2A9" stroke-width="1.5" marker-end="url(#ov-arrow)"/>
+      <text x="556" y="144" text-anchor="middle" font-size="10" fill="#6B6B6B">On risk signal</text>
+
+      <!-- ── FLOW 03: Rights protection (branch) ── -->
+      <rect x="464" y="151" width="184" height="100" rx="12" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1"/>
+      <rect x="464" y="151" width="184" height="26" rx="12" fill="#F1EFE8" stroke="none"/>
+      <rect x="464" y="163" width="184" height="14" rx="0" fill="#F1EFE8" stroke="none"/>
+      <text x="556" y="169" text-anchor="middle" font-size="11" font-weight="600" fill="#444441">FLOW 03 · Rights protection</text>
+      <text x="556" y="197" text-anchor="middle" font-size="11" font-weight="500" fill="#3C3489">AI risk detection</text>
+      <text x="556" y="215" text-anchor="middle" font-size="11" font-weight="500" fill="#3C3489">→ AI native-language guidance</text>
+      <text x="556" y="233" text-anchor="middle" font-size="11" fill="#6B6B6B">→ Expert connection</text>
+
+      <!-- Arrow 02→04 -->
+      <line x1="250" y1="262" x2="250" y2="296" stroke="#B4B2A9" stroke-width="1.5" marker-end="url(#ov-arrow)"/>
+
+      <!-- ── FLOW 04: Retention ── -->
+      <rect x="80" y="298" width="340" height="74" rx="12" fill="#FFFFFF" stroke="#D3D1C7" stroke-width="1"/>
+      <rect x="80" y="298" width="340" height="26" rx="12" fill="#F1EFE8" stroke="none"/>
+      <rect x="80" y="310" width="340" height="14" rx="0" fill="#F1EFE8" stroke="none"/>
+      <text x="250" y="316" text-anchor="middle" font-size="11" font-weight="600" fill="#444441">FLOW 04 · Retention</text>
+      <text x="250" y="349" text-anchor="middle" font-size="11" fill="#6B6B6B">Active member → Experience accrues → Network quality rises</text>
+
+      <!-- ══ Self-reinforcing loop (purple, left side) ══ -->
+      <path d="M80 335 L44 335 L44 67 L78 67" fill="none" stroke="#534AB7" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#ov-arrow-purple)"/>
+      <text x="38" y="200" text-anchor="middle" font-size="10" font-weight="500" fill="#3C3489" transform="rotate(-90 38 200)">Reinforcing loop — AI improves with every contribution</text>
+
+      <!-- Arrow from FLOW 04 to summary -->
+      <line x1="250" y1="372" x2="250" y2="398" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="3 3"/>
+
+      <!-- ══ Bottom summary ══ -->
+      <rect x="56" y="400" width="568" height="56" rx="10" fill="none" stroke="#B4B2A9" stroke-width="0.5" stroke-dasharray="4 3"/>
+      <text x="340" y="423" text-anchor="middle" font-size="12" font-weight="500" fill="#444441">Members ↑ → Experience data ↑ → AI quality ↑ → Network value ↑ → Members ↑</text>
+      <text x="340" y="443" text-anchor="middle" font-size="11" fill="#6B6B6B">Accumulated data cannot be replicated — the moat widens over time</text>
+
+    </svg>
+
+    <p class="overview-note">
+      The purple dashed line marks the AI-reinforcing loop — accumulated contributions continuously improve translation, search, and detection. Detailed steps for each flow appear in the sections above.
+    </p>
+  </div>
+</section>
+
+
+<!-- Footer -->
+<footer>
+  <p><span class="brand">GachiWork</span> · User Flow Document</p>
+</footer>
+
+</div>
+</body>
+</html>

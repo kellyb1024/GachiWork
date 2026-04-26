@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>GachiWork — Interactive Prototype</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<link rel="stylesheet" href="styles.css" />
+<meta name="ext-resource-dependency" content="assets/gachiwork-logo.png" data-resource-id="gachiworkLogo" />
+<meta name="ext-resource-dependency" content="assets/gachiwork-icon.png" data-resource-id="gachiworkIcon" />
+<template id="__bundler_thumbnail" data-bg-color="#1a4872">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#1a4872"/>
+    <rect x="480" y="220" width="240" height="240" rx="52" fill="#1E6FD9"/>
+    <circle cx="600" cy="340" r="72" fill="none" stroke="#fff" stroke-width="12"/>
+    <circle cx="580" cy="320" r="14" fill="#fff"/>
+    <circle cx="620" cy="320" r="14" fill="#F5B400"/>
+    <text x="600" y="560" font-family="sans-serif" font-size="54" font-weight="800" fill="#fff" text-anchor="middle">Gachi<tspan fill="#F5B400">Work</tspan></text>
+  </svg>
+</template>
+</head>
+<body>
+  <!-- Desktop stage: iPhone 13 mini framed on a neutral wall -->
+  <div id="stage" class="stage">
+    <div class="stage-head">
+      <div class="brand">
+        <img class="brand-mark" src="assets/gachiwork-logo.png" alt="GachiWork"/>
+        <div>
+          <div class="brand-title">Gachi<em>Work</em></div>
+          <div class="brand-sub">Interactive Prototype</div>
+        </div>
+      </div>
+      <div class="stage-actions">
+        <button class="reset-btn" id="resetBtn" title="Back to start">⟲ Reset</button>
+      </div>
+    </div>
+
+    <!-- Phone device frame. On small viewports the frame dissolves into fullscreen. -->
+    <div class="phone-frame" id="phoneFrame">
+      <div class="phone-side left"></div>
+      <div class="phone-side right"></div>
+      <div class="phone-side top"></div>
+      <div class="phone-side bottom"></div>
+      <div class="phone-notch"></div>
+      <div class="phone-screen" id="app">
+        <!-- React root -->
+      </div>
+    </div>
+
+    <div class="stage-footnote">
+      Group 18 · KLES Capstone
+    </div>
+  </div>
+
+  <!-- Libraries -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <!-- App code -->
+  <script type="text/babel" src="src/icons.jsx"></script>
+  <script type="text/babel" src="src/data.jsx"></script>
+  <script type="text/babel" src="src/ui.jsx"></script>
+  <script type="text/babel" src="src/screens/Chrome.jsx"></script>
+  <script type="text/babel" src="src/screens/Auth.jsx"></script>
+  <script type="text/babel" src="src/screens/Home.jsx"></script>
+  <script type="text/babel" src="src/screens/Composer.jsx"></script>
+  <script type="text/babel" src="src/screens/PostDetail.jsx"></script>
+  <script type="text/babel" src="src/screens/Board.jsx"></script>
+  <script type="text/babel" src="src/screens/Search.jsx"></script>
+  <script type="text/babel" src="src/screens/Inbox.jsx"></script>
+  <script type="text/babel" src="src/screens/Profile.jsx"></script>
+  <script type="text/babel" src="src/screens/RiskAlert.jsx"></script>
+  <script type="text/babel" src="src/screens/Expert.jsx"></script>
+  <script type="text/babel" src="src/App.jsx"></script>
+</body>
+</html>

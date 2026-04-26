@@ -8,7 +8,7 @@
 <link rel="stylesheet" as="style" crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
-<link rel="stylesheet" href="./tokens.css" />
+<link rel="stylesheet" href="../web/app/tokens.css" />
 <style>
   /* :root 디자인 토큰은 별도 파일에서 단일 출처로 관리 → ./tokens.css */
 
@@ -115,7 +115,7 @@
   /* Chips & Tags */
   .chip{display:inline-flex;align-items:center;gap:var(--s-1);height:28px;padding:0 var(--s-3);border-radius:var(--r-pill);font-size:12px;font-weight:600;background:var(--line-soft);color:var(--ink-soft)}
   .chip.primary{background:var(--primary-50);color:var(--primary)}
-  .chip.secondary{background:var(--secondary-50);color:#92400E}
+  .chip.secondary{background:rgba(245,158,11,.14);color:var(--ink)}
   .chip.success{background:var(--primary-50);color:var(--primary)}
   .chip.danger{background:var(--danger-50);color:var(--danger)}
   .chip.outline{background:transparent;border:1px solid var(--line);color:var(--ink-soft)}
@@ -128,13 +128,10 @@
 
   /* Source labels (Trust Layered principle) */
   .src{display:inline-flex;align-items:center;gap:var(--s-1);font-size:11px;font-weight:600;padding:3px 8px;border-radius:var(--r-1);text-transform:uppercase;letter-spacing:.04em}
-  .src.verified{background:var(--secondary);color:#fff}
-  .src.expert{background:#D1FAE5;color:#065F46}
-  .src.peer{background:transparent;color:var(--neutral);padding:3px 0;letter-spacing:.06em}
-  .src.risk{background:var(--danger-50);color:var(--danger)}
-  .src.topic{background:var(--primary-50);color:var(--primary)}
-  .src.topic.active{background:var(--primary);color:#fff}
-  .src.ai{background:var(--secondary-50);color:#92400E}
+  .src.official{background:var(--primary);color:#fff}
+  .src.expert{background:var(--secondary);color:#fff}
+  .src.peer{background:transparent;color:var(--neutral);border:1px solid var(--line)}
+  .src.ai{background:var(--ai-50);color:var(--ai)}
 
   /* Do / Don't */
   .dodont{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4);margin:var(--s-4) 0}
@@ -219,7 +216,7 @@
       <div class="card-grid">
         <div class="card">
           <h3 style="margin-top:0">1. Two Voices</h3>
-          <p style="margin:0">파랑은 구조와 신뢰, 노랑은 강조와 따뜻함, 보라는 AI 정체성, 초록은 안전·완료를 말합니다. 빨강은 위험 알림 전용.</p>
+          <p style="margin:0">파랑은 구조와 신뢰를, 노랑은 강조와 따뜻함을 말합니다. 다른 색은 의미가 있을 때(성공/위험/경고)만 등장합니다.</p>
         </div>
         <div class="card">
           <h3 style="margin-top:0">2. Breath First</h3>
@@ -261,7 +258,7 @@
       <p>로고와 워드마크를 나란히 쓸 때는 다음 규칙을 따릅니다.</p>
       <ul style="color:var(--ink-soft);font-size:15px;line-height:1.7;margin-bottom:var(--s-4)">
         <li><b style="color:var(--primary)">Gachi</b> — Primary 블루 (<code>#2E74B5</code>)</li>
-        <li><b style="color:var(--secondary)">Work</b> — Secondary Amber (<code>#F59E0B</code>)</li>
+        <li><b style="color:var(--secondary)">Work</b> — Secondary 옐로우 (<code>#F59E0B</code>)</li>
         <li>워드마크 글자 높이 ≈ 로고 높이의 약 50%</li>
         <li>로고와 워드마크 사이 간격 = 로고 폭의 1/4</li>
       </ul>
@@ -326,45 +323,34 @@
     <section id="color">
       <h4>04 · Color</h4>
       <h2>Color</h2>
-      <p><b>브랜드 색 시스템은 4개 그룹</b>: Brand (블루+옐로우 — 신뢰+따뜻함), Tertiary (초록 — 안전·완료), AI (보라 — HCI 원칙: AI 시각 분리), Functional (빨강 — 위험 한정). 프로토타입(deployed v2)이 사용하는 실제 토큰을 mirror.</p>
+      <p><b>브랜드 색은 단 두 가지 — 블루(Cobalt)와 옐로우(Amber)</b>. 모든 화면은 이 두 색 + 중성으로 구성되어야 합니다. 빨강과 보라는 브랜드 색이 아니라 <b>기능적 신호</b>입니다 (위험 알림, AI 출처 라벨). 다른 hue 추가 금지.</p>
 
-      <h3>Brand</h3>
+      <h3>Brand (이 두 가지가 전부)</h3>
       <div class="palette">
         <div class="swatch"><div class="swatch-color" style="background:var(--primary)"></div><div class="swatch-meta"><b>Primary</b><span>#0047AB</span><span class="role">Cobalt · CTA, 로고, 활성</span></div></div>
         <div class="swatch"><div class="swatch-color" style="background:var(--primary-700)"></div><div class="swatch-meta"><b>Primary 700</b><span>#00357F</span><span class="role">hover, depth</span></div></div>
         <div class="swatch"><div class="swatch-color" style="background:var(--primary-50)"></div><div class="swatch-meta"><b>Primary 50</b><span>#E5EEFA</span><span class="role">soft bg, chips</span></div></div>
-        <div class="swatch"><div class="swatch-color" style="background:var(--secondary)"></div><div class="swatch-meta"><b>Secondary</b><span>#F59E0B</span><span class="role">Amber · 강조, 인증, 따뜻함</span></div></div>
-        <div class="swatch"><div class="swatch-color" style="background:var(--secondary-50)"></div><div class="swatch-meta"><b>Secondary 50</b><span>#FEF3C7</span><span class="role">soft bg</span></div></div>
-        <div class="swatch"><div class="swatch-color" style="background:var(--secondary-100)"></div><div class="swatch-meta"><b>Secondary 100</b><span>#FDE68A</span><span class="role">hover bg</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--secondary)"></div><div class="swatch-meta"><b>Secondary</b><span>#F59E0B</span><span class="role">Amber · 단일 색 (베리에이션 없음)</span></div></div>
       </div>
-
-      <h3>Tertiary</h3>
-      <div class="palette">
-        <div class="swatch"><div class="swatch-color" style="background:var(--tertiary-500)"></div><div class="swatch-meta"><b>Tertiary 500</b><span>#10B981</span><span class="role">Emerald · 안전·완료 상태</span></div></div>
-        <div class="swatch"><div class="swatch-color" style="background:var(--tertiary)"></div><div class="swatch-meta"><b>Tertiary</b><span>#ECFDF5</span><span class="role">soft mint bg</span></div></div>
-      </div>
-
-      <h3>AI 콘텐츠 패턴 (Secondary 사용)</h3>
-      <p style="font-size:14px;color:var(--ink-soft);margin-bottom:var(--s-4)">AI는 별도 hue가 아닌 <b>Secondary cream tint</b>로 표현. 카드 배경 = `--secondary-50` (`#FEF3C7`), 텍스트 = `#92400E` (진한 amber). 인간 콘텐츠(흰 카드)와 시각 분리. AI 토큰(`--ai` 등 violet 계열)은 tokens.css에 존재하지만 브랜드 키트에서는 사용하지 않음.</p>
 
       <h3>Neutrals (사실상 가장 많이 쓰는 색)</h3>
       <div class="palette">
-        <div class="swatch"><div class="swatch-color" style="background:var(--ink)"></div><div class="swatch-meta"><b>Ink</b><span>#0F172A</span><span class="role">제목, 본문 강조</span></div></div>
-        <div class="swatch"><div class="swatch-color" style="background:var(--ink-soft)"></div><div class="swatch-meta"><b>Ink Soft</b><span>#475569</span><span class="role">본문</span></div></div>
-        <div class="swatch"><div class="swatch-color" style="background:var(--neutral)"></div><div class="swatch-meta"><b>Neutral</b><span>#75777C</span><span class="role">보조 텍스트</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--ink)"></div><div class="swatch-meta"><b>Ink</b><span>#111827</span><span class="role">제목, 본문 강조</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--ink-soft)"></div><div class="swatch-meta"><b>Ink Soft</b><span>#4B5563</span><span class="role">본문</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--neutral)"></div><div class="swatch-meta"><b>Neutral</b><span>#6B7280</span><span class="role">보조 텍스트</span></div></div>
         <div class="swatch"><div class="swatch-color" style="background:var(--line);border:1px solid var(--neutral)"></div><div class="swatch-meta"><b>Line</b><span>#E5E7EB</span><span class="role">구분선</span></div></div>
-        <div class="swatch"><div class="swatch-color" style="background:var(--line-soft);border:1px solid var(--line)"></div><div class="swatch-meta"><b>Line Soft</b><span>#EEF2F7</span><span class="role">매우 옅은 분리</span></div></div>
-        <div class="swatch"><div class="swatch-color" style="background:var(--bg);border:1px solid var(--line)"></div><div class="swatch-meta"><b>BG</b><span>#F5F7FB</span><span class="role">페이지 배경</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--line-soft);border:1px solid var(--line)"></div><div class="swatch-meta"><b>Line Soft</b><span>#F3F4F6</span><span class="role">매우 옅은 분리</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--bg);border:1px solid var(--line)"></div><div class="swatch-meta"><b>BG</b><span>#F8FAFC</span><span class="role">페이지 배경</span></div></div>
         <div class="swatch"><div class="swatch-color" style="background:var(--card);border:1px solid var(--line)"></div><div class="swatch-meta"><b>Card</b><span>#FFFFFF</span><span class="role">카드, 인풋</span></div></div>
       </div>
 
-      <h3>Functional (특정 의미 한정 사용)</h3>
-      <p style="font-size:14px;color:var(--ink-soft);margin-bottom:var(--s-4)">아래 색들은 <b>장식 사용 금지</b>. 각각 정해진 의미에만 등장합니다.</p>
+      <h3>Functional (브랜드 색 아님 · 특정 의미만)</h3>
+      <p style="font-size:14px;color:var(--ink-soft);margin-bottom:var(--s-4)">아래 두 색은 <b>장식·강조 용도로 사용 금지</b>. 각각 정해진 단 하나의 의미에만 사용합니다. <b>Success/Warning은 의도적으로 제거</b> — 완료/주의 상태도 브랜드 색(파랑·노랑)으로 표현합니다.</p>
       <div class="palette">
-        <div class="swatch"><div class="swatch-color" style="background:var(--danger)"></div><div class="swatch-meta"><b>Danger</b><span>#DC2626</span><span class="role">위험 · 권리침해 경보</span></div></div>
-        <div class="swatch"><div class="swatch-color" style="background:var(--danger-50)"></div><div class="swatch-meta"><b>Danger 50</b><span>#FEF2F2</span><span class="role">soft danger bg</span></div></div>
-        <div class="swatch"><div class="swatch-color" style="background:var(--warn)"></div><div class="swatch-meta"><b>Warn</b><span>#F97316</span><span class="role">Orange · 주의·중간 위험</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--danger)"></div><div class="swatch-meta"><b>Danger</b><span>#FB1616</span><span class="role" style="display:inline-flex;align-items:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg> 위험 · 권리침해 경보 전용</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:var(--ai)"></div><div class="swatch-meta"><b>AI</b><span>#7C3AED</span><span class="role" style="display:inline-flex;align-items:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 14.06A2 2 0 0 0 8.5 12.62l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 8.5a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0L14.06 7.06A2 2 0 0 0 15.5 8.5l6.14 1.58a.5.5 0 0 1 0 .96L15.5 12.62a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg> AI 생성 콘텐츠 라벨 전용 (HCI 원칙)</span></div></div>
       </div>
+      <div class="quote" style="margin-top:var(--s-4);background:var(--ai-50);border-left-color:var(--ai);color:var(--ai)"><b>HCI 원칙 — AI 출처 분리</b>: AI가 생성한 모든 콘텐츠(답변·요약·번역·추천)는 보라색 라벨과 sparkle 아이콘으로 명시적으로 구분합니다. 인간이 작성한 정보(공식·전문가·동료)와 시각적으로 같은 무게로 보이지 않게 하는 것이 사용자 신뢰의 기본 전제입니다.</div>
 
       <h3>색 사용 비율 (눈대중 가이드)</h3>
       <p>한 화면에서 다음 비율을 넘지 않도록.</p>
@@ -602,22 +588,22 @@
       <div class="demo">
         <div class="card-grid">
           <article class="card interactive">
-            <span class="src topic">Manufacturing</span>
-            <h3 style="margin:var(--s-3) 0 var(--s-2);font-size:16px">Dorm deduction ₩300,000 — is this normal?</h3>
-            <p style="margin:0;font-size:14px">Anonymous_042 · #Dormitory #Wages</p>
-            <p style="margin:var(--s-3) 0 0;font-size:12px;color:var(--neutral)">1h ago · 4 likes · 2 comments</p>
+            <span class="src official"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 7 3 7"/><line x1="6" x2="6" y1="11" y2="17"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/><line x1="18" x2="18" y1="11" y2="17"/><line x1="3" x2="21" y1="21" y2="21"/></svg> 공식</span>
+            <h3 style="margin:var(--s-3) 0 var(--s-2);font-size:16px">임금이 제때 안 들어왔다면</h3>
+            <p style="margin:0;font-size:14px">고용노동부 신고 절차를 5단계로 안내합니다. 모국어로 읽기.</p>
+            <p style="margin:var(--s-3) 0 0;font-size:12px;color:var(--neutral)">2025.12 갱신 · 4분 소요</p>
           </article>
           <article class="card interactive">
-            <span class="src expert">EXPERT</span>
-            <h3 style="margin:var(--s-3) 0 var(--s-2);font-size:16px">Direct reply from a labor attorney</h3>
-            <p style="margin:0;font-size:14px">Minjeong Kim · Active now · Free 1:1 chat available in Vietnamese, Indonesian.</p>
-            <p style="margin:var(--s-3) 0 0;font-size:12px;color:var(--neutral)">Avg response 4 hours</p>
+            <span class="src expert"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg> 전문가</span>
+            <h3 style="margin:var(--s-3) 0 var(--s-2);font-size:16px">계약과 다른 일을 시킬 때</h3>
+            <p style="margin:0;font-size:14px">노무사 김OO이 직접 답변. 동의 없는 업무 변경 대응법.</p>
+            <p style="margin:var(--s-3) 0 0;font-size:12px;color:var(--neutral)">베트남어 답변 가능 · 평균 응답 4시간</p>
           </article>
           <article class="card interactive">
-            <span class="src risk">Risk signal</span>
-            <h3 style="margin:var(--s-3) 0 var(--s-2);font-size:16px">3 months unpaid + visa retaliation fear</h3>
-            <p style="margin:0;font-size:14px">AI flagged as a serious case. Walk through legal options + counselor connection.</p>
-            <p style="margin:var(--s-3) 0 0;font-size:12px;color:var(--danger)">Urgent · response within 24h</p>
+            <span class="src peer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 동료</span>
+            <h3 style="margin:var(--s-3) 0 var(--s-2);font-size:16px">화성 공장단지 첫 6개월</h3>
+            <p style="margin:0;font-size:14px">먼저 정착한 워커의 경험담. 식당·은행·교통 팁 모음.</p>
+            <p style="margin:var(--s-3) 0 0;font-size:12px;color:var(--neutral)">이OO · 좋아요 142</p>
           </article>
         </div>
       </div>
@@ -626,21 +612,18 @@
     <!-- 12 Trust labels -->
     <section id="trust">
       <h4>12 · Trust Labels</h4>
-      <h2>Trust Labels</h2>
-      <p>프로토타입에서 실제 사용 중인 5종 라벨 + AI 카드 패턴. 각 라벨은 서로 다른 정체성·신뢰 신호를 나타냅니다.</p>
+      <h2>Trust Labels (출처 라벨)</h2>
+      <p>모든 정보 카드, 모든 답변에 다음 4개 중 하나를 답니다. 단순한 라벨이 아니라 우리 서비스의 핵심 약속입니다.</p>
+      <p><b>HCI 원칙 — AI는 별도 색</b>: 인간이 작성·검증한 콘텐츠(공식·전문가·동료) 3종은 브랜드 색(파랑·노랑·중성)을 사용하고, AI 생성 콘텐츠는 <b>오직 보라색</b>으로 분리합니다. 사용자가 한눈에 "이 정보는 사람이 책임지는가, AI가 만든 것인가"를 식별할 수 있어야 합니다.</p>
       <table>
-        <thead><tr><th>라벨</th><th>색·스타일</th><th>의미</th><th>등장 위치</th></tr></thead>
+        <thead><tr><th>라벨</th><th>의미</th><th>예</th></tr></thead>
         <tbody>
-          <tr><td><span class="src verified">Verified</span></td><td>Secondary (Amber) 채움 + 흰 글자</td><td>비자·신원 인증된 사용자</td><td>Home greeting, Profile 이름 옆</td></tr>
-          <tr><td><span class="src expert">EXPERT</span></td><td>Tertiary 50 (Mint) 배경 + 진한 초록 글자 (#065F46)</td><td>인증된 전문가 (노무사·변호사 등)</td><td>전문가 채팅 헤더, Expert 화면 카드</td></tr>
-          <tr><td><span class="src peer">PEER</span></td><td>Neutral 회색 작은 대문자 텍스트 (배경 없음)</td><td>일반 사용자(동료) 식별</td><td>Inbox 알림 메타, Profile 답변 라벨</td></tr>
-          <tr><td><span class="src risk">Risk signal</span></td><td>Danger 50 (옅은 빨강) 배경 + Danger 글자</td><td>임금체불·산재·인권침해 등 권리 위험 신호</td><td>Post 상단, Inbox 긴급 알림</td></tr>
-          <tr><td><span class="src topic">Manufacturing</span></td><td>Primary 50 (옅은 파랑) 배경 + Primary 글자. 선택 시 Primary 채움</td><td>주제·산업·국가별 분류</td><td>피드 카드, 글쓰기 태그 칩</td></tr>
+          <tr><td><span class="src official"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 7 3 7"/><line x1="6" x2="6" y1="11" y2="17"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/><line x1="18" x2="18" y1="11" y2="17"/><line x1="3" x2="21" y1="21" y2="21"/></svg> 공식</span></td><td>정부·공공기관 발행 정보</td><td>고용노동부, HRD-Korea, EPS</td></tr>
+          <tr><td><span class="src expert"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg> 전문가</span></td><td>인증된 전문가 직접 답변</td><td>노무사·변호사·행정사</td></tr>
+          <tr><td><span class="src peer"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> 동료</span></td><td>다른 노동자의 경험·의견</td><td>커뮤니티 게시글·댓글</td></tr>
+          <tr><td><span class="src ai"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 14.06A2 2 0 0 0 8.5 12.62l-6.14-1.58a.5.5 0 0 1 0-.96L8.5 8.5a2 2 0 0 0 1.44-1.44l1.58-6.14a.5.5 0 0 1 .96 0L14.06 7.06A2 2 0 0 0 15.5 8.5l6.14 1.58a.5.5 0 0 1 0 .96L15.5 12.62a2 2 0 0 0-1.44 1.44l-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg> AI</span></td><td>AI 자동 응답 (<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2a3.13 3.13 0 0 1 3 3.88Z"/></svg> / <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L12 22a3.13 3.13 0 0 1-3-3.88Z"/></svg> 평가 필수)</td><td>FAQ 챗봇·번역</td></tr>
         </tbody>
       </table>
-
-      <h3>AI 카드 패턴 (라벨 아닌 카드 전체 스타일)</h3>
-      <p><b>AI 답변 카드는 Secondary 50 cream tint 배경</b> (`#FEF3C7`) + 진한 amber 텍스트(`#92400E`)로 인간 콘텐츠(흰 카드)와 시각 분리. 카드 하단 필수: <b>Helpful / Inaccurate 평가 버튼</b> + <b>"AI for reference only"</b> 디스클레이머 + 출처 수(예: "RAG-grounded · 14 sources").</p>
     </section>
 
     <!-- 13 Voice -->
@@ -705,8 +688,8 @@
       <h2>Don'ts (가장 흔한 실수)</h2>
 
       <div class="dodont">
-        <div class="dd do"><span class="badge">Do</span><p>한 화면에 파랑 + 노랑 + 중성을 기본. 초록(완료)·보라(AI)·빨강(위험)은 의미 있을 때만</p></div>
-        <div class="dd dont"><span class="badge">Don't</span><p>핑크·청록·코랄 등 시스템에 없는 색을 추가</p><p class="note">알록달록은 신뢰를 깎습니다.</p></div>
+        <div class="dd do"><span class="badge">Do</span><p>한 화면에 파랑 + 노랑 + 중성만 사용</p></div>
+        <div class="dd dont"><span class="badge">Don't</span><p>보라·청록·코랄을 의미 없이 추가</p><p class="note">알록달록은 신뢰를 깎습니다.</p></div>
       </div>
 
       <div class="dodont">
@@ -725,7 +708,7 @@
       </div>
 
       <div class="dodont">
-        <div class="dd do"><span class="badge">Do</span><p>AI 생성 콘텐츠는 <b>Secondary 50 cream tint 배경</b> + sparkle 아이콘 + <b>Helpful/Inaccurate 평가 버튼</b> + <b>"AI for reference only"</b> 문구로 분리</p><p class="note">HCI 원칙: 사용자가 정보의 출처(인간 vs AI)를 한눈에 식별할 수 있어야 신뢰가 성립.</p></div>
+        <div class="dd do"><span class="badge">Do</span><p>AI 생성 콘텐츠는 <b style="color:var(--ai)">보라색 라벨 + sparkle</b>로 항상 분리</p><p class="note">HCI 원칙: 사용자가 정보의 출처(인간 vs AI)를 한눈에 식별할 수 있어야 신뢰가 성립.</p></div>
         <div class="dd dont"><span class="badge">Don't</span><p>AI 답변을 인간 답변과 같은 색·스타일로 노출</p><p class="note">출처 모호함은 잘못된 의사결정의 주요 원인.</p></div>
       </div>
 

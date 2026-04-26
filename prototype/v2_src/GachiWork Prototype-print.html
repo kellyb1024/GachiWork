@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>GachiWork — Prototype PDF</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  /* ========== Print layout: each screen on its own A4 landscape page ========== */
+  html, body {
+    background:#fff !important;
+    min-height:0 !important;
+    overflow:visible !important;
+  }
+  body {
+    margin:0; padding:0;
+    font-family: var(--font);
+    color: var(--ink);
+    background: #fff;
+  }
+  .print-sheet-wrap {
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    padding: 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .print-sheet {
+    background:#fff;
+    border:1px solid #E5E7EB;
+    border-radius:20px;
+    padding: 24px 24px 28px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    box-shadow: 0 4px 14px -8px rgba(15,23,42,.12);
+  }
+  .sheet-head {
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px;
+    padding-bottom:10px;
+    border-bottom:1px dashed #E5E7EB;
+  }
+  .sheet-label {
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.08em;
+    color:#0F172A;
+    text-transform:uppercase;
+  }
+  .sheet-num {
+    font-size:11px;
+    font-weight:600;
+    color:#75777C;
+    letter-spacing:.04em;
+  }
+  .sheet-desc {
+    font-size:11px;
+    color:#475569;
+    width:100%;
+    margin-top:10px;
+    line-height:1.45;
+  }
+
+  /* Phone frame inside print sheet */
+  .print-phone {
+    width: 375px;
+    height: 812px;
+    border-radius: 40px;
+    overflow:hidden;
+    position: relative;
+    background:#F5F7FB;
+    box-shadow: 0 0 0 10px #0B0D10, 0 0 0 12px #2A2E36;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .print-phone .app-root { position:absolute; inset:0; }
+
+  /* Cover / title page */
+  .cover {
+    page-break-after: always;
+    break-after: page;
+    min-height: 100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding: 80px 60px;
+    background: linear-gradient(165deg, #2E74B5 0%, #245e93 45%, #1A4872 100%);
+    color:#fff;
+    text-align:center;
+  }
+  .cover h1 {
+    font-size: 96px;
+    font-weight: 800;
+    letter-spacing:-0.03em;
+    line-height:1;
+    margin:0;
+  }
+  .cover h1 em {
+    font-style:normal;
+    background: linear-gradient(135deg,#F59E0B 0%, #FDE68A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip:text;
+  }
+  .cover p { max-width:720px; font-size:20px; line-height:1.5; opacity:.85; margin-top:28px; }
+  .cover .meta { font-size:13px; letter-spacing:.18em; opacity:.6; margin-top:56px; text-transform:uppercase; }
+
+  /* Section divider pages */
+  .divider {
+    page-break-before: page;
+    break-before: page;
+    min-height: 90vh;
+    padding: 60px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .divider .tag {
+    font-size:12px; letter-spacing:.18em; color:#2E74B5; text-transform:uppercase; font-weight:700;
+  }
+  .divider h2 {
+    font-size:56px; font-weight:800; color:#0F172A; margin:12px 0 16px; letter-spacing:-0.02em;
+  }
+  .divider p { font-size:16px; color:#475569; max-width:640px; line-height:1.55; }
+
+  /* Force any screen's inner gradients/colors to print */
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Page break between sheet pages */
+  .page-break { page-break-after: page; break-after: page; }
+
+  @media print {
+    @page { size: A4 landscape; margin: 14mm; }
+    .print-sheet-wrap { padding: 0; gap: 18px; }
+    .print-sheet { box-shadow:none; border:1px solid #E5E7EB; padding:18px; }
+    .print-phone {
+      width: 300px; height: 650px;
+      box-shadow: 0 0 0 6px #0B0D10, 0 0 0 8px #2A2E36;
+    }
+    .cover { padding: 40px; min-height: 190mm; }
+    .cover h1 { font-size: 72px; }
+    .divider { min-height: 180mm; padding: 40px; }
+    .divider h2 { font-size: 46px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========= Cover ========= -->
+<section class="cover">
+  <div style="width:120px;height:120px;border-radius:32px;background:#fff;display:grid;place-items:center;box-shadow:0 30px 60px -20px rgba(0,0,0,.5);margin-bottom:40px">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#2E74B5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-3V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2zM9 5h6v2H9z"/></svg>
+  </div>
+  <h1>Gachi<em>Work</em></h1>
+  <p>An anonymous community for migrant workers in Korea.<br/>AI-powered peer support, grounded in Korean labor law.</p>
+  <div class="meta">Group 18 · KLES Capstone · Interactive Prototype</div>
+</section>
+
+<!-- ========= Divider: Onboarding ========= -->
+<section class="divider">
+  <div class="tag">Section 01</div>
+  <h2>Onboarding</h2>
+  <p>A purple-to-blue branded landing, a simple sign-in, and a 5-step sign-up that verifies the E-9 visa, captures a nickname, sets a password, and records nationality and preferred language.</p>
+</section>
+
+<!-- Onboarding screens grid -->
+<div class="print-sheet-wrap">
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Landing</span><span class="sheet-num">01</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"landing"}'></div></div>
+    <div class="sheet-desc">Hero with palette-driven gradient, feature preview cards, and dual CTAs for new and returning users.</div>
+  </div>
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Sign In</span><span class="sheet-num">02</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"login"}'></div></div>
+    <div class="sheet-desc">Nickname or email + password, with password toggle and quick path to sign-up.</div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<div class="print-sheet-wrap">
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Sign Up · Step 1</span><span class="sheet-num">03</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"signup"}' data-signup-step="1"></div></div>
+    <div class="sheet-desc">E-9 visa verification — upload ARC photo, or enter registration number manually.</div>
+  </div>
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Sign Up · Step 2</span><span class="sheet-num">04</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"signup"}' data-signup-step="2"></div></div>
+    <div class="sheet-desc">Nickname + optional email, with a live avatar preview of how the user appears to others.</div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<div class="print-sheet-wrap">
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Sign Up · Step 3</span><span class="sheet-num">05</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"signup"}' data-signup-step="3"></div></div>
+    <div class="sheet-desc">Password with confirmation and a four-bar strength indicator.</div>
+  </div>
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Sign Up · Step 4</span><span class="sheet-num">06</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"signup"}' data-signup-step="4" data-signup-natopen="1"></div></div>
+    <div class="sheet-desc">Nationality picker grouped into Southeast Asia and Central Asia & Other — the full E-9 sending-country list.</div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<div class="print-sheet-wrap">
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Sign Up · Step 5</span><span class="sheet-num">07</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"signup"}' data-signup-step="5"></div></div>
+    <div class="sheet-desc">Preferred language dropdown with privacy assurances and terms acknowledgement.</div>
+  </div>
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Home Feed</span><span class="sheet-num">08</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"home"}'></div></div>
+    <div class="sheet-desc">Default landing after auth — feed, AI teaser, FAB composer, and bottom tab bar with unread-count badge.</div>
+  </div>
+</div>
+
+<!-- ========= Divider: Core Flow ========= -->
+<section class="divider">
+  <div class="tag">Section 02</div>
+  <h2>Ask & Answer</h2>
+  <p>From the home feed, a worker writes a post, gets an instant AI answer grounded in labor law + community data, and connects with peers who've had similar experiences.</p>
+</section>
+
+<div class="print-sheet-wrap">
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Composer</span><span class="sheet-num">09</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"compose"}'></div></div>
+    <div class="sheet-desc">Post composer with topic chips, image attachments, and an anonymous-by-default toggle.</div>
+  </div>
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Post Detail + AI</span><span class="sheet-num">10</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"post","pid":"p1"}'></div></div>
+    <div class="sheet-desc">RAG-grounded AI answer, source citations, peer replies, and an "people with similar experience" cross-connect.</div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<div class="print-sheet-wrap">
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Category Board</span><span class="sheet-num">11</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"board","bkey":"manufacturing"}'></div></div>
+    <div class="sheet-desc">Industry-scoped board with member count, today's activity, and top-rated posts.</div>
+  </div>
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Explore</span><span class="sheet-num">12</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"search"}'></div></div>
+    <div class="sheet-desc">Search with industry / topic / region filters, and quick-access boards by industry.</div>
+  </div>
+</div>
+
+<!-- ========= Divider: Safety Net ========= -->
+<section class="divider">
+  <div class="tag">Section 03</div>
+  <h2>Safety Net</h2>
+  <p>When the AI detects a high-risk situation — unpaid wages, workplace injury, passport confiscation — it privately alerts the worker and offers a free, anonymous 1:1 consultation with verified experts.</p>
+</section>
+
+<div class="print-sheet-wrap">
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Inbox</span><span class="sheet-num">13</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"inbox"}'></div></div>
+    <div class="sheet-desc">Notifications and direct messages — risk alerts, AI updates, peer replies, and attorney conversations.</div>
+  </div>
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Risk Signal</span><span class="sheet-num">14</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"risk"}'></div></div>
+    <div class="sheet-desc">Private risk notice — only the user sees it. Explains the situation and offers clear next actions.</div>
+  </div>
+</div>
+
+<div class="page-break"></div>
+
+<div class="print-sheet-wrap">
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Expert Connection</span><span class="sheet-num">15</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"expert"}'></div></div>
+    <div class="sheet-desc">Free anonymous consultation with labor attorneys, lawyers, and Migrant Worker Support Center counselors in the user's language.</div>
+  </div>
+  <div class="print-sheet">
+    <div class="sheet-head"><span class="sheet-label">Profile</span><span class="sheet-num">16</span></div>
+    <div class="print-phone"><div class="app-root" data-route='{"name":"profile"}'></div></div>
+    <div class="sheet-desc">Anonymous profile with activity history, trust temperature, and privacy settings.</div>
+  </div>
+</div>
+
+<!-- Libraries -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<!-- App source -->
+<script type="text/babel" src="src/icons.jsx"></script>
+<script type="text/babel" src="src/data.jsx"></script>
+<script type="text/babel" src="src/ui.jsx"></script>
+<script type="text/babel" src="src/screens/Chrome.jsx"></script>
+<script type="text/babel" src="src/screens/Auth.jsx"></script>
+<script type="text/babel" src="src/screens/Home.jsx"></script>
+<script type="text/babel" src="src/screens/Composer.jsx"></script>
+<script type="text/babel" src="src/screens/PostDetail.jsx"></script>
+<script type="text/babel" src="src/screens/Board.jsx"></script>
+<script type="text/babel" src="src/screens/Search.jsx"></script>
+<script type="text/babel" src="src/screens/Inbox.jsx"></script>
+<script type="text/babel" src="src/screens/Profile.jsx"></script>
+<script type="text/babel" src="src/screens/RiskAlert.jsx"></script>
+<script type="text/babel" src="src/screens/Expert.jsx"></script>
+
+<!-- Multi-mount driver: mount a static copy of each screen into every .app-root -->
+<script type="text/babel">
+/* Wait for Babel to finish parsing the JSX scripts, then mount each sheet's root at its
+   data-route. Each mount is independent — one React tree per .app-root. */
+(function(){
+  const mountAll = () => {
+    const nodes = document.querySelectorAll('.print-sheet .app-root');
+    nodes.forEach(el => {
+      let r;
+      try { r = JSON.parse(el.dataset.route); } catch(e){ r = { name:'home' }; }
+      // Pre-seed signup state for the specific step
+      if (r.name === 'signup') {
+        const step = parseInt(el.dataset.signupStep || '1', 10);
+        window.__PDF_SIGNUP_STEP = step;
+        window.__PDF_NATOPEN = el.dataset.signupNatopen === '1';
+      }
+      const PrintShell = () => {
+        const [st] = React.useState(r);
+        if (r.name === 'landing') return <Landing onGetStarted={()=>{}} onLogin={()=>{}}/>;
+        if (r.name === 'login')   return <Login onBack={()=>{}} onSignup={()=>{}} onDone={()=>{}}/>;
+        if (r.name === 'signup')  return <SignupSnapshot/>;
+        if (r.name === 'home')    return <Home onTab={()=>{}} onOpenPost={()=>{}} onOpenBoard={()=>{}} onCompose={()=>{}} onOpenExpert={()=>{}} aiDisplay="card"/>;
+        if (r.name === 'search')  return <Search onTab={()=>{}} onOpenBoard={()=>{}} onOpenPost={()=>{}}/>;
+        if (r.name === 'inbox')   return <Inbox onTab={()=>{}} onOpenRisk={()=>{}} onOpenPost={()=>{}}/>;
+        if (r.name === 'profile') return <Profile onTab={()=>{}} onOpenPost={()=>{}}/>;
+        if (r.name === 'compose') return <Composer onBack={()=>{}} onPublish={()=>{}} layout="single"/>;
+        if (r.name === 'post')    return <PostDetail postId={r.pid} onBack={()=>{}} onOpenRisk={()=>{}} onOpenExpert={()=>{}} aiDisplay="card" evalStyle="buttons"/>;
+        if (r.name === 'board')   return <Board boardKey={r.bkey} onBack={()=>{}} onOpenPost={()=>{}} onCompose={()=>{}}/>;
+        if (r.name === 'risk')    return <RiskAlert onBack={()=>{}} onOpenExpert={()=>{}}/>;
+        if (r.name === 'expert')  return <Expert onBack={()=>{}}/>;
+        return <div/>;
+      };
+      /* Signup starts at step 1 but we need different steps for each sheet.
+         Wrap Signup so it starts on the step requested via window.__PDF_SIGNUP_STEP. */
+      const SignupSnapshot = () => {
+        const step = window.__PDF_SIGNUP_STEP || 1;
+        const natOpen = !!window.__PDF_NATOPEN;
+        const [mounted, setMounted] = React.useState(false);
+        React.useEffect(() => { setMounted(true); }, []);
+        return <SignupAtStep step={step} natOpen={natOpen}/>;
+      };
+      try {
+        ReactDOM.createRoot(el).render(<PrintShell/>);
+      } catch(e) { console.error('mount failed for', r, e); }
+    });
+  };
+
+  /* Helper that drives Signup to a given step. Since the Signup component owns its
+     state, we render it and then programmatically click "Next" to advance. */
+  window.SignupAtStep = ({ step, natOpen }) => {
+    const [ready, setReady] = React.useState(false);
+    const containerRef = React.useRef(null);
+    React.useEffect(() => {
+      if (step === 1) { setReady(true); return; }
+      // Wait a tick, then simulate clicks until we reach the target step
+      const advance = () => {
+        const root = containerRef.current;
+        if (!root) return;
+        // Find the "Next" button (primary at footer) and click it `step-1` times
+        for (let i = 1; i < step; i++) {
+          // For each step's canNext, pre-fill required fields by finding inputs
+          fillRequiredForStep(root, i);
+          const btns = root.querySelectorAll('.composer-footer .btn');
+          const next = btns[btns.length-1];
+          if (next && !next.disabled) next.click();
+        }
+        if (natOpen) {
+          // Open the nationality dropdown at step 4
+          const dropdownTrigger = root.querySelectorAll('button')[0];
+          // Find the first button after the heading on step 4 — simpler: find by text
+          root.querySelectorAll('button').forEach(b => {
+            if (b.textContent && b.textContent.includes('Select your nationality')) b.click();
+          });
+        }
+        setReady(true);
+      };
+      const t = setTimeout(advance, 50);
+      return () => clearTimeout(t);
+    }, [step, natOpen]);
+
+    function fillRequiredForStep(root, currentStep) {
+      if (currentStep === 1) {
+        // Tap the upload box to mark visaFile=true
+        const upload = root.querySelector('button[style*="2px dashed"], button[style*="2px solid var(--primary)"]');
+        if (upload) upload.click();
+      }
+      if (currentStep === 2) {
+        const nickInput = root.querySelector('input[placeholder*="worker"]');
+        if (nickInput) {
+          const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+          setter.call(nickInput, 'worker042');
+          nickInput.dispatchEvent(new Event('input', {bubbles:true}));
+        }
+      }
+      if (currentStep === 3) {
+        const pwInputs = root.querySelectorAll('input[type="password"], input[type="text"]');
+        const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
+        pwInputs.forEach(inp => {
+          if (inp.placeholder && (inp.placeholder.includes('8') || inp.placeholder.includes('Re-enter'))) {
+            setter.call(inp, 'passw0rd!');
+            inp.dispatchEvent(new Event('input', {bubbles:true}));
+          }
+        });
+      }
+      if (currentStep === 4) {
+        // Click the nationality dropdown to open, then click Indonesia
+        const dropdownBtns = [...root.querySelectorAll('button')].filter(b => b.textContent.includes('Select your nationality'));
+        if (dropdownBtns[0]) {
+          dropdownBtns[0].click();
+          setTimeout(() => {
+            const id = [...root.querySelectorAll('button')].find(b => b.textContent.trim() === 'Indonesia');
+            if (id) id.click();
+          }, 0);
+        }
+      }
+    }
+    return (
+      <div ref={containerRef} style={{height:'100%', display:'flex', flexDirection:'column'}}>
+        <Signup onBack={()=>{}} onDone={()=>{}}/>
+      </div>
+    );
+  };
+
+  /* Babel transpiles scripts async. Wait for document.readyState + a tick. */
+  const ready = () => {
+    if (typeof Landing === 'undefined' || typeof Home === 'undefined') {
+      setTimeout(ready, 120);
+      return;
+    }
+    mountAll();
+    // wait for fonts + mounts + delay, then auto-print
+    const kickPrint = async () => {
+      if (document.fonts && document.fonts.ready) {
+        try { await document.fonts.ready; } catch {}
+      }
+      await new Promise(r => setTimeout(r, 1200));
+      window.print();
+    };
+    kickPrint();
+  };
+  if (document.readyState === 'complete') setTimeout(ready, 400);
+  else window.addEventListener('load', () => setTimeout(ready, 400));
+})();
+</script>
+</body>
+</html>
